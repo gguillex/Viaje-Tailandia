@@ -1,1481 +1,548 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tailandia 2026 · 3–18 Septiembre</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:       #07100d;
-    --bg2:      #0d1a14;
-    --card:     rgba(255,255,255,0.04);
-    --border:   rgba(255,255,255,0.08);
-    --cream:    #f2e8d0;
-    --muted:    rgba(242,232,208,0.55);
-    --gold:     #d4a843;
-    --teal:     #3ebfb0;
-    --green:    #72c47e;
-    --violet:   #9b6fd8;
-    --coral:    #e06b6b;
-    --pink:     #e0609a;
-
-    --bkk:      #d4a843;
-    --cnx:      #72c47e;
-    --cei:      #9b6fd8;
-    --krabi:    #3ebfb0;
-    --phiphi:   #3ebfb0;
-    --koh:      #e0609a;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--cream);
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    line-height: 1.65;
-    font-size: 15px;
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(7,16,13,0.92);
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 32px;
-    display: flex; align-items: center; gap: 4px;
-    height: 52px;
-  }
-  nav .logo {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px; font-weight: 700;
-    color: var(--gold);
-    margin-right: auto;
-    letter-spacing: .04em;
-  }
-  nav a {
-    color: var(--muted); text-decoration: none;
-    font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-    padding: 6px 12px; border-radius: 4px;
-    transition: color .2s, background .2s;
-  }
-  nav a:hover { color: var(--cream); background: var(--card); }
-  nav a.active-nav { color: var(--teal); background: var(--card); }
-
-  .menu-btn {
-    display: none;
-    font-size: 24px;
-    color: var(--gold);
-    cursor: pointer;
-    user-select: none;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 340px;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 64px 48px 48px;
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 70% 60% at 30% 50%, rgba(62,191,176,.12), transparent),
-                radial-gradient(ellipse 50% 80% at 80% 20%, rgba(212,168,67,.09), transparent);
-    pointer-events: none;
-  }
-  .hero-eyebrow {
-    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--teal); margin-bottom: 12px;
-  }
-  .hero h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(40px, 6.5vw, 80px);
-    font-weight: 800; line-height: 1.1;
-    letter-spacing: -.01em;
-  }
-  .hero h1 em { font-style: normal; color: var(--gold); }
-  .hero-meta {
-    display: flex; flex-wrap: wrap; gap: 24px;
-    margin-top: 28px;
-  }
-  .hero-chip {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 13px; color: var(--muted);
-  }
-  .hero-chip span { color: var(--cream); font-weight: 400; }
-
-  /* ── SECTIONS ── */
-  section {
-    max-width: 1100px; margin: 0 auto;
-    padding: 72px 32px;
-    display: none;
-  }
-  section.active { display: block; animation: fadeUp .5s ease both; }
-  .section-label {
-    font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--teal); margin-bottom: 8px;
-  }
-  .section-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 32px; font-weight: 700;
-    margin-bottom: 40px; line-height: 1.1;
-  }
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 0 32px;
-    display: none;
-  }
-
-  /* ── TRANSPORTS ── */
-  .transport-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-  }
-  .transport-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 22px;
-    display: flex; flex-direction: column; gap: 8px;
-    transition: border-color .2s, transform .2s;
-  }
-  .transport-card:hover { border-color: rgba(255,255,255,.15); transform: translateY(-2px); }
-  .transport-top {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    gap: 12px;
-  }
-  .transport-name { font-size: 14px; font-weight: 400; line-height: 1.3; }
-  .badge {
-    flex-shrink: 0;
-    font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
-    padding: 3px 10px; border-radius: 99px; font-weight: 500;
-  }
-  .badge.ok    { background: rgba(114,196,126,.18); color: var(--green);  border: 1px solid rgba(114,196,126,.3); }
-  .badge.todo  { background: rgba(224,107,107,.18); color: var(--coral);  border: 1px solid rgba(224,107,107,.3); }
-  .badge.info  { background: rgba(212,168,67,.15);  color: var(--gold);   border: 1px solid rgba(212,168,67,.25); }
-  .transport-date { font-size: 12px; color: var(--muted); }
-  .transport-link a {
-    font-size: 12px; color: var(--teal);
-    text-decoration: none; opacity: .8;
-    transition: opacity .2s;
-  }
-  .transport-link a:hover { opacity: 1; }
-
-  /* ── ACCOMMODATIONS ── */
-  .accom-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-  }
-  .accom-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 0;
-    overflow: hidden;
-    transition: transform .2s, border-color .2s;
-  }
-  .accom-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.14); }
-  .accom-header {
-    padding: 4px 20px;
-    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-    font-weight: 500;
-  }
-  .accom-body { padding: 18px 20px 20px; }
-  .accom-name {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px; font-weight: 700; line-height: 1.2;
-    margin-bottom: 6px;
-  }
-  .accom-dates { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
-  .accom-price-row {
-    display: flex; align-items: baseline; gap: 6px;
-    margin-bottom: 10px;
-  }
-  .accom-price {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 28px; font-weight: 700;
-  }
-  .accom-price-unit { font-size: 12px; color: var(--muted); }
-  .accom-per { font-size: 13px; color: var(--muted); }
-  .accom-footer {
-    display: flex; justify-content: space-between; align-items: center;
-    padding-top: 12px;
-    border-top: 1px solid var(--border);
-    gap: 12px;
-  }
-  .accom-pay { font-size: 12px; color: var(--muted); }
-  .accom-pay strong { color: var(--cream); font-weight: 400; }
-  .accom-link a {
-    font-size: 12px; color: var(--teal); text-decoration: none;
-    display: flex; align-items: center; gap: 4px;
-    opacity: .8; transition: opacity .2s;
-  }
-  .accom-link a:hover { opacity: 1; }
-  .accom-note {
-    font-size: 12px; color: var(--gold);
-    margin-top: 8px; display: flex; align-items: center; gap: 5px;
-  }
-  .accom-options { margin-top: 16px; }
-  .accom-opt-title {
-    font-size: 11px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: .12em;
-    margin-bottom: 10px;
-  }
-  .opt-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px;
-    background: rgba(255,255,255,.03);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: border-color .2s, background .2s;
-  }
-  .opt-row:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); }
-  .opt-row.selected { border-color: var(--teal); background: rgba(62,191,176,.08); }
-  .opt-name { font-size: 13px; font-weight: 400; }
-  .opt-price-tag {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px; font-weight: 700;
-  }
-  .opt-badge {
-    font-size: 10px; padding: 2px 8px; border-radius: 99px; font-weight: 500;
-    margin-left: 8px;
-  }
-  .opt-badge.res { background: rgba(114,196,126,.18); color: var(--green); border: 1px solid rgba(114,196,126,.3); }
-  .opt-badge.pend { background: rgba(212,168,67,.15); color: var(--gold); border: 1px solid rgba(212,168,67,.25); }
-  .opt-badge.lux { background: rgba(224,96,154,.18); color: var(--pink); border: 1px solid rgba(224,96,154,.3); }
-
-  /* ── ITINERARY ── */
-  .itinerary { position: relative; }
-  .city-block { margin-bottom: 56px; }
-  .city-heading {
-    display: flex; align-items: center; gap: 16px;
-    margin-bottom: 24px;
-  }
-  .city-dot {
-    width: 12px; height: 12px; border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .city-name {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 26px; font-weight: 700;
-  }
-  .city-sub {
-    font-size: 12px; color: var(--muted); margin-left: 4px;
-    letter-spacing: .05em;
-  }
-  .day-list { padding-left: 28px; }
-  .day-item {
-    display: grid; grid-template-columns: 110px 1fr;
-    gap: 16px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .day-item:last-child { border-bottom: none; }
-  .day-label {
-    font-size: 12px; color: var(--muted);
-    padding-top: 2px;
-    letter-spacing: .04em;
-  }
-  .day-label strong { color: var(--cream); font-weight: 500; display: block; font-size: 13px; }
-  .day-content { font-size: 14px; line-height: 1.6; }
-  .day-content p { margin-bottom: 6px; }
-  .day-content p:last-child { margin-bottom: 0; }
-  .day-highlight {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 12px; font-weight: 500;
-    padding: 3px 10px; border-radius: 99px;
-    margin: 3px 4px 3px 0;
-  }
-
-  /* ── BUDGET ── */
-  .budget-intro {
-    font-size: 14px; color: var(--muted);
-    max-width: 620px; margin-bottom: 36px; line-height: 1.7;
-  }
-  .budget-scenarios {
-    display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 20px; margin-bottom: 40px;
-  }
-  @media(max-width:700px) { .budget-scenarios { grid-template-columns: 1fr; } }
-  .scenario {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 24px;
-    transition: border-color .25s, transform .25s;
-    cursor: pointer;
-  }
-  .scenario:hover { transform: translateY(-4px); }
-  .scenario.active { border-color: var(--teal); background: rgba(62,191,176,.07); }
-  .scenario-label {
-    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-    color: var(--teal); margin-bottom: 6px;
-  }
-  .scenario-name {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px; font-weight: 700; margin-bottom: 4px;
-  }
-  .scenario-desc { font-size: 12px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
-  .scenario-price-main {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 46px; font-weight: 800; line-height: 1;
-    color: var(--cream);
-    white-space: nowrap;
-  }
-  .scenario-price-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
-  .scenario-group {
-    font-size: 13px; color: var(--gold);
-    margin-top: 8px; font-weight: 400;
-  }
-
-  .budget-breakdown {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-  .breakdown-title {
-    padding: 18px 24px;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--muted);
-  }
-  table {
-    width: 100%; border-collapse: collapse;
-    font-size: 14px;
-  }
-  thead th {
-    padding: 14px 24px;
-    text-align: left;
-    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--muted); font-weight: 400;
-    border-bottom: 1px solid var(--border);
-  }
-  thead th:not(:first-child) { text-align: right; }
-  tbody tr { border-bottom: 1px solid rgba(255,255,255,.04); }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: rgba(255,255,255,.025); }
-  tbody tr.total-row {
-    border-top: 1px solid var(--border);
-    background: rgba(62,191,176,.06);
-  }
-  td {
-    padding: 12px 24px;
-  }
-  td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  td.total-row-label {
-    font-weight: 500; font-size: 15px;
-  }
-  td.total-val {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px; font-weight: 700; color: var(--teal);
-  }
-  td.per-val {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px; font-weight: 700; color: var(--gold);
-  }
-  td .chip {
-    display: inline-block;
-    font-size: 10px; padding: 2px 8px;
-    border-radius: 99px;
-    background: rgba(114,196,126,.15); color: var(--green);
-    border: 1px solid rgba(114,196,126,.25);
-    margin-left: 6px;
-  }
-  td .chip.best { background: rgba(62,191,176,.15); color: var(--teal); border-color: rgba(62,191,176,.3); }
-  td.krabi-a { color: var(--teal); }
-  td.krabi-b { color: var(--green); }
-  td.krabi-c { color: var(--pink); }
-  .note-row td {
-    font-size: 12px; color: var(--muted);
-    padding: 10px 24px;
-    background: rgba(212,168,67,.04);
-  }
-
-  /* ── PENDING BOX ── */
-  .pending-box {
-    background: rgba(224,107,107,.08);
-    border: 1px solid rgba(224,107,107,.25);
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin-top: 16px;
-  }
-  .pending-box h4 {
-    font-size: 13px; font-weight: 500; color: var(--coral);
-    margin-bottom: 12px; letter-spacing: .06em;
-  }
-  .pending-item {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 13px; color: var(--muted);
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255,255,255,.05);
-  }
-  .pending-item:last-child { border-bottom: none; }
-  .pending-item a { color: var(--teal); text-decoration: none; opacity: .8; }
-  .pending-item a:hover { opacity: 1; }
-
-  /* ── BILLETES ── */
-  .travelers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-  }
-  .traveler-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-  }
-  .traveler-name {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px; font-weight: 700;
-    margin-bottom: 20px; color: var(--gold);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .t-list { display: flex; flex-direction: column; }
-  .traveler-transport {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,.05);
-  }
-  .traveler-transport:last-child { border-bottom: none; padding-bottom: 0; }
-  .t-info { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--cream); }
-  .t-status {
-    width: 18px; height: 18px; border-radius: 50%;
-    border: 2px solid rgba(255,255,255,.2);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; transition: all .3s;
-  }
-  .t-status.done {
-    background: var(--green); border-color: var(--green); color: var(--bg);
-  }
-  .t-status.done::after {
-    content: '✓'; font-size: 12px; font-weight: bold;
-  }
-  .t-actions { display: flex; gap: 6px; }
-  .btn-action {
-    background: rgba(255,255,255,.08); color: var(--cream);
-    border: none; padding: 6px 12px; border-radius: 6px;
-    font-size: 11px; cursor: pointer; transition: background .2s;
-    text-decoration: none; display: inline-flex; align-items: center;
-  }
-  .btn-action:hover { background: rgba(255,255,255,.15); }
-  .btn-view { background: rgba(62,191,176,.15); color: var(--teal); }
-  .btn-view:hover { background: rgba(62,191,176,.25); }
-  .btn-action.is-paid { background: rgba(114,196,126,.15); color: var(--green); }
-  .btn-action.is-paid:hover { background: rgba(114,196,126,.25); }
-
-  .t-subtitle {
-    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--teal); margin-bottom: 4px; margin-top: 16px;
-    border-bottom: 1px solid rgba(255,255,255,.05); padding-bottom: 6px;
-  }
-  .t-subtitle:first-child { margin-top: 0; }
-
-  /* colors by city */
-  .bkk  { color: var(--bkk);  } .bg-bkk  { background: var(--bkk);  }
-  .cnx  { color: var(--cnx);  } .bg-cnx  { background: var(--cnx);  }
-  .cei  { color: var(--cei);  } .bg-cei  { background: var(--cei);  }
-  .krabi{ color: var(--krabi);} .bg-krabi{ background: var(--krabi);}
-  .koh  { color: var(--koh);  } .bg-koh  { background: var(--koh);  }
-
-  /* ── FOOTER ── */
-  footer {
-    text-align: center; padding: 48px 32px;
-    font-size: 12px; color: var(--muted);
-    border-top: 1px solid var(--border);
-  }
-
-  /* ── MODAL BILLETES ── */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(4px);
-    display: none; align-items: center; justify-content: center; z-index: 1000;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal-content {
-    background: var(--bg2); border: 1px solid var(--border);
-    padding: 24px; border-radius: 16px; width: 90%; max-width: 400px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-  }
-  .modal-content h3 { font-family: 'Montserrat', sans-serif; margin-bottom: 4px; color: var(--cream); }
-  .modal-content label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; margin-top: 16px; }
-  .modal-content input[type="text"] {
-    width: 100%; padding: 10px; background: var(--bg); border: 1px solid var(--border);
-    border-radius: 8px; color: var(--cream); font-size: 14px; outline: none;
-  }
-  .modal-content input[type="text"]:focus { border-color: var(--teal); }
-  .modal-content input[type="file"] { width: 100%; font-size: 13px; color: var(--muted); padding: 8px; border: 1px dashed var(--border); border-radius: 8px; }
-  .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
-  .btn-cancel { background: transparent; border: 1px solid var(--border); color: var(--cream); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: background .2s; }
-  .btn-cancel:hover { background: rgba(255,255,255,.05); }
-  .btn-save { background: var(--teal); border: none; color: var(--bg); font-weight: 600; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: opacity .2s; }
-  .btn-save:hover { opacity: .9; }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(18px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  .hero > * { animation: fadeUp .7s ease both; }
-  .hero .hero-eyebrow { animation-delay: .1s; }
-  .hero h1             { animation-delay: .22s; }
-  .hero .hero-meta     { animation-delay: .4s; }
-
-  @media(max-width:640px) {
-    nav {
-      flex-wrap: wrap;
-      height: auto;
-      min-height: 52px;
-      padding: 12px 20px;
-    }
-    .menu-btn { display: block; }
-    nav a {
-      display: none;
-      width: 100%;
-      padding: 12px 8px;
-      margin-top: 4px;
-      border-bottom: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    nav a:last-child { border-bottom: none; }
-    nav.open a { display: block; }
-    section { padding: 48px 20px; }
-    .hero { padding: 48px 24px 36px; }
-    .hero h1 { font-weight: 700; }
-    .section-title { font-weight: 500; font-size: 26px; }
-    .city-name { font-weight: 500; font-size: 22px; }
-    .accom-name, .scenario-name { font-weight: 500; }
-    .scenario-price-main { font-weight: 700; }
-    .transport-grid { grid-template-columns: 1fr; }
-    .accom-grid { grid-template-columns: 1fr; }
-    .day-item { grid-template-columns: 1fr; gap: 4px; }
-    .budget-scenarios { grid-template-columns: 1fr; }
-    table { font-size: 11px; }
-    td, thead th { padding: 8px 5px; }
-    td.total-val, td.per-val { font-size: 13px; }
-    td.total-row-label { font-size: 11px; }
-    
-    .travelers-grid { grid-template-columns: 1fr; }
-    .traveler-card { padding: 16px; }
-    .t-info { font-size: 12px; }
-    .btn-action { padding: 5px 10px; font-size: 10px; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailandia 2026 · 3–18 Septiembre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="navbar">
-  <div class="logo">Tailandia '26</div>
-  <div class="menu-btn" onclick="document.getElementById('navbar').classList.toggle('open')">☰</div>
-  <a href="#transportes" class="active-nav" onclick="showSection('transportes', event)">Transportes</a>
-  <a href="#billetes" onclick="showSection('billetes', event)">Billetes</a>
-  <a href="#alojamientos" onclick="showSection('alojamientos', event)">Alojamientos</a>
-  <a href="#itinerario" onclick="showSection('itinerario', event)">Itinerario</a>
-  <a href="#presupuesto" onclick="showSection('presupuesto', event)">Presupuesto</a>
-</nav>
+<!-- ═══════════════════════════════════════════ AUTH SCREEN ═══ -->
+<div id="auth-screen">
+  <article class="auth-card">
+    <header>
+      <p class="auth-logo">Tailandia <span>'26</span></p>
+      <p class="auth-subtitle">Zona privada · Grupo de 7</p>
+    </header>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">Viaje en grupo · 7 personas</div>
-  <h1>Tailandia<br><em>Septiembre 2026</em></h1>
-  <div class="hero-meta">
-    <div class="hero-chip">📅 <span>3 – 18 Septiembre · 15 noches</span></div>
-    <div class="hero-chip">📍 <span>Bangkok · Chiang Mai · Chiang Rai · Krabi · Phi Phi · Koh Tao</span></div>
-    <div class="hero-chip">✈️ <span>Vuelo de ida 3 sept · Vuelta 18 sept</span></div>
-  </div>
+    <!-- Loading -->
+    <section id="auth-loading">
+      <span class="spinner"></span>
+      <p>Conectando…</p>
+    </section>
+
+    <!-- Setup (primera vez, sin PIN configurado) -->
+    <section id="setup-mode" style="display:none">
+      <p class="auth-desc">Primera vez — establece el PIN del grupo (4 dígitos).</p>
+      <fieldset class="pin-row" id="setup-pin-inputs">
+        <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" data-group="setup" data-index="0" autocomplete="off">
+        <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" data-group="setup" data-index="1" autocomplete="off">
+        <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" data-group="setup" data-index="2" autocomplete="off">
+        <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" data-group="setup" data-index="3" autocomplete="off">
+      </fieldset>
+      <p id="setup-error" class="auth-error"></p>
+      <button class="auth-btn" onclick="setupPin()">Establecer PIN</button>
+    </section>
+
+    <!-- Login -->
+    <section id="login-mode" style="display:none">
+      <p class="auth-desc">Introduce el PIN para acceder</p>
+      <fieldset class="pin-row" id="login-pin-inputs">
+        <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" data-group="login" data-index="0" autocomplete="off">
+        <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" data-group="login" data-index="1" autocomplete="off">
+        <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" data-group="login" data-index="2" autocomplete="off">
+        <input type="password" inputmode="numeric" maxlength="1" class="pin-digit" data-group="login" data-index="3" autocomplete="off">
+      </fieldset>
+      <p id="auth-error" class="auth-error"></p>
+      <aside id="auth-lockout" class="auth-lockout" style="display:none">
+        <span id="lockout-icon">🔒</span>
+        <span id="lockout-message"></span>
+      </aside>
+      <p id="auth-attempts-info" class="auth-attempts-info"></p>
+      <button class="auth-btn" id="login-btn" onclick="verifyPin()">Entrar</button>
+    </section>
+  </article>
 </div>
 
-<!-- TRANSPORTES -->
-<hr class="divider">
-<section id="transportes" class="active">
-  <div class="section-label">Logística</div>
-  <div class="section-title">Transportes internos</div>
+<!-- ═══════════════════════════════════════════ MAIN APP ═══════ -->
+<main id="app" style="display:none">
 
-  <div class="transport-grid">
+  <!-- NAV -->
+  <nav id="navbar">
+    <strong class="logo">Tailandia '26</strong>
+    <button class="menu-btn" onclick="document.getElementById('navbar').classList.toggle('open')" aria-label="Menú">☰</button>
+    <a href="#transportes" class="active-nav" onclick="showSection('transportes', event)">Transportes</a>
+    <a href="#billetes"    onclick="showSection('billetes', event)">Billetes</a>
+    <a href="#alojamientos" onclick="showSection('alojamientos', event)">Alojamientos</a>
+    <a href="#itinerario"  onclick="showSection('itinerario', event)">Itinerario</a>
+    <a href="#presupuesto" onclick="showSection('presupuesto', event)">Presupuesto</a>
+    <button class="nav-logout" onclick="logout()" title="Cerrar sesión">⏻</button>
+  </nav>
 
-    <div class="transport-card">
-      <div class="transport-top">
-        <div class="transport-name">✈️ Vuelo Madrid ↔ Bangkok (Ida y vuelta)</div>
-        <span class="badge ok">Confirmado</span>
-      </div>
-      <div class="transport-date">3 y 18 de septiembre</div>
-      <div class="transport-link"><a href="https://www.skyscanner.es/transporte/vuelos/mad/bkkt/260903/260918/config/13870-2609032215--31456-0-9970-2609041530%7C9970-2609181830--31456-0-13870-2609190245?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false" target="_blank">Skyscanner →</a></div>
-    </div>
+  <!-- HERO -->
+  <header class="hero">
+    <p class="hero-eyebrow">Viaje en grupo · 7 personas</p>
+    <h1>Tailandia<br><em>Septiembre 2026</em></h1>
+    <ul class="hero-meta">
+      <li class="hero-chip">📅 <span>3 – 18 Septiembre · 15 noches</span></li>
+      <li class="hero-chip">📍 <span>Bangkok · Chiang Mai · Chiang Rai · Krabi · Phi Phi · Koh Tao</span></li>
+      <li class="hero-chip">✈️ <span>Vuelo de ida 3 sept · Vuelta 18 sept</span></li>
+    </ul>
+  </header>
 
-    <div class="transport-card">
-      <div class="transport-top">
-        <div class="transport-name">✈️ Vuelo Bangkok → Chiang Mai</div>
-        <span class="badge ok">Confirmado</span>
-      </div>
-      <div class="transport-date">7 de septiembre</div>
-      <div class="transport-link"><a href="https://www.skyscanner.es/transporte/vuelos/bkkt/cnx/260907/config/9970-2609071220--31768-0-10658-2609071340?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&outboundaltsenabled=false&inboundaltsenabled=false&preferdirects=false" target="_blank">Skyscanner →</a></div>
-    </div>
+  <!-- TRANSPORTES -->
+  <hr class="divider">
+  <section id="transportes" class="active">
+    <p class="section-label">Logística</p>
+    <h2 class="section-title">Transportes internos</h2>
+    <ul class="transport-grid">
 
-    <div class="transport-card">
-      <div class="transport-top">
-        <div class="transport-name">🚐 Furgoneta Chiang Mai → Chiang Rai</div>
-        <span class="badge ok">Confirmado</span>
-      </div>
-      <div class="transport-date">9 de septiembre</div>
-      <div class="transport-link"><a href="https://12go.asia/es/checkout/e54dc41c" target="_blank">12go.asia →</a></div>
-    </div>
+      <li class="transport-card">
+        <header class="transport-top">
+          <span class="transport-name">✈️ Vuelo Madrid ↔ Bangkok (Ida y vuelta)</span>
+          <span class="badge ok">Confirmado</span>
+        </header>
+        <p class="transport-date">3 y 18 de septiembre</p>
+        <p class="transport-link"><a href="https://www.skyscanner.es/transporte/vuelos/mad/bkkt/260903/260918/config/13870-2609032215--31456-0-9970-2609041530%7C9970-2609181830--31456-0-13870-2609190245?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false" target="_blank">Skyscanner →</a></p>
+      </li>
 
-    <div class="transport-card">
-      <div class="transport-top">
-        <div class="transport-name">✈️ Vuelo Chiang Rai → Krabi <small style="color:var(--muted)">(escala Bangkok 1h)</small></div>
-        <span class="badge ok">Confirmado</span>
-      </div>
-      <div class="transport-date">10 de septiembre</div>
-      <div class="transport-link"><a href="https://www.skyscanner.es/transporte/vuelos/cei/kbv/260910/config/10438-2609101020--31768-1-12917-2609101410?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false" target="_blank">Skyscanner →</a></div>
-    </div>
+      <li class="transport-card">
+        <header class="transport-top">
+          <span class="transport-name">✈️ Vuelo Bangkok → Chiang Mai</span>
+          <span class="badge ok">Confirmado</span>
+        </header>
+        <p class="transport-date">7 de septiembre</p>
+        <p class="transport-link"><a href="https://www.skyscanner.es/transporte/vuelos/bkkt/cnx/260907/config/9970-2609071220--31768-0-10658-2609071340?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&outboundaltsenabled=false&inboundaltsenabled=false&preferdirects=false" target="_blank">Skyscanner →</a></p>
+      </li>
 
-    <div class="transport-card">
-      <div class="transport-top">
-        <div class="transport-name">⛵ Ferry Krabi ↔ Phi Phi (ida y vuelta)</div>
-        <span class="badge ok">Confirmado</span>
-      </div>
-      <div class="transport-date">11 y 12 de septiembre</div>
-      <div class="transport-link"><a href="https://12go.asia/es/checkout/c8501057" target="_blank">12go.asia →</a></div>
-    </div>
+      <li class="transport-card">
+        <header class="transport-top">
+          <span class="transport-name">🚐 Furgoneta Chiang Mai → Chiang Rai</span>
+          <span class="badge ok">Confirmado</span>
+        </header>
+        <p class="transport-date">9 de septiembre</p>
+        <p class="transport-link"><a href="https://12go.asia/es/checkout/e54dc41c" target="_blank">12go.asia →</a></p>
+      </li>
 
-    <div class="transport-card">
-      <div class="transport-top">
-        <div class="transport-name">🚢 Transporte Krabi → Koh Tao</div>
-        <span class="badge ok">Confirmado</span>
-      </div>
-      <div class="transport-date">13 de septiembre</div>
-      <div class="transport-link"><a href="https://12go.asia/es/checkout/d17aeb0f" target="_blank">12go.asia →</a></div>
-    </div>
+      <li class="transport-card">
+        <header class="transport-top">
+          <span class="transport-name">✈️ Vuelo Chiang Rai → Krabi <small style="color:var(--muted)">(escala Bangkok 1h)</small></span>
+          <span class="badge ok">Confirmado</span>
+        </header>
+        <p class="transport-date">10 de septiembre</p>
+        <p class="transport-link"><a href="https://www.skyscanner.es/transporte/vuelos/cei/kbv/260910/config/10438-2609101020--31768-1-12917-2609101410?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false" target="_blank">Skyscanner →</a></p>
+      </li>
 
-    <div class="transport-card">
-      <div class="transport-top">
-        <div class="transport-name">⛴️ Ferry Koh Tao → Chumphon</div>
-        <span class="badge ok">Confirmado</span>
-      </div>
-      <div class="transport-date">17 de septiembre</div>
-      <div class="transport-link"><a href="https://12go.asia/es/checkout/e54d2aab" target="_blank">12go.asia →</a></div>
-    </div>
+      <li class="transport-card">
+        <header class="transport-top">
+          <span class="transport-name">⛵ Ferry Krabi ↔ Phi Phi (ida y vuelta)</span>
+          <span class="badge ok">Confirmado</span>
+        </header>
+        <p class="transport-date">11 y 12 de septiembre</p>
+        <p class="transport-link"><a href="https://12go.asia/es/checkout/c8501057" target="_blank">12go.asia →</a></p>
+      </li>
 
-    <div class="transport-card">
-      <div class="transport-top">
-        <div class="transport-name">✈️ Vuelo Chumphon → Bangkok</div>
-        <span class="badge ok">Confirmado</span>
-      </div>
-      <div class="transport-date">17 de septiembre</div>
-      <div class="transport-link"><a href="https://www.skyscanner.es/transporte/vuelos/cjm/bkkt/260917/config/10558-2609171930--32024-0-11052-2609172030?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false" target="_blank">Skyscanner →</a></div>
-    </div>
+      <li class="transport-card">
+        <header class="transport-top">
+          <span class="transport-name">🚢 Transporte Krabi → Koh Tao</span>
+          <span class="badge ok">Confirmado</span>
+        </header>
+        <p class="transport-date">13 de septiembre</p>
+        <p class="transport-link"><a href="https://12go.asia/es/checkout/d17aeb0f" target="_blank">12go.asia →</a></p>
+      </li>
 
-  </div>
+      <li class="transport-card">
+        <header class="transport-top">
+          <span class="transport-name">⛴️ Ferry Koh Tao → Chumphon</span>
+          <span class="badge ok">Confirmado</span>
+        </header>
+        <p class="transport-date">17 de septiembre</p>
+        <p class="transport-link"><a href="https://12go.asia/es/checkout/e54d2aab" target="_blank">12go.asia →</a></p>
+      </li>
 
- 
-</section>
+      <li class="transport-card">
+        <header class="transport-top">
+          <span class="transport-name">✈️ Vuelo Chumphon → Bangkok</span>
+          <span class="badge ok">Confirmado</span>
+        </header>
+        <p class="transport-date">17 de septiembre</p>
+        <p class="transport-link"><a href="https://www.skyscanner.es/transporte/vuelos/cjm/bkkt/260917/config/10558-2609171930--32024-0-11052-2609172030?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false" target="_blank">Skyscanner →</a></p>
+      </li>
 
-<!-- BILLETES -->
-<hr class="divider">
-<section id="billetes">
-  <div class="section-label">Gestión Individual</div>
-  <div class="section-title">Billetes por Viajero</div>
+    </ul>
+  </section>
 
-  <div class="travelers-grid" id="travelers-container">
-    <!-- Generado dinámicamente mediante JS -->
-  </div>
-</section>
+  <!-- BILLETES -->
+  <hr class="divider">
+  <section id="billetes">
+    <p class="section-label">Gestión Individual</p>
+    <h2 class="section-title">Billetes por Viajero</h2>
+    <p id="billetes-loading" class="data-loading">
+      <span class="spinner sm"></span> Cargando datos…
+    </p>
+    <ul class="travelers-grid" id="travelers-container"></ul>
+  </section>
 
-<!-- ALOJAMIENTOS -->
-<hr class="divider">
-<section id="alojamientos">
-  <div class="section-label">Dónde dormimos</div>
-  <div class="section-title">Alojamientos</div>
+  <!-- ALOJAMIENTOS -->
+  <hr class="divider">
+  <section id="alojamientos">
+    <p class="section-label">Dónde dormimos</p>
+    <h2 class="section-title">Alojamientos</h2>
+    <ul class="accom-grid">
 
-  <div class="accom-grid">
+      <li class="accom-card">
+        <header class="accom-header bg-bkk" style="color:#07100d">Bangkok · Parada 1</header>
+        <article class="accom-body">
+          <h3 class="accom-name">Alojamiento Bangkok</h3>
+          <p class="accom-dates">4 – 7 septiembre · 3 noches</p>
+          <p class="accom-price-row"><strong class="accom-price bkk">234 €</strong><span class="accom-price-unit">/ grupo</span></p>
+          <p class="accom-per">~33 €/persona</p>
+          <footer class="accom-footer">
+            <p class="accom-pay">Pagar <strong>22 agosto</strong></p>
+            <p class="accom-link"><a href="https://www.airbnb.com/l/LWCQ19CH?s=67&unique_share_id=0db328a9-c4b7-446d-b65b-2443df0330d8" target="_blank">Ver en Airbnb ↗</a></p>
+          </footer>
+        </article>
+      </li>
 
-    <!-- Bangkok 1 -->
-    <div class="accom-card">
-      <div class="accom-header bg-bkk" style="color:#07100d">Bangkok · Parada 1</div>
-      <div class="accom-body">
-        <div class="accom-name">Alojamiento Bangkok</div>
-        <div class="accom-dates">4 – 7 septiembre · 3 noches</div>
-        <div class="accom-price-row">
-          <div class="accom-price bkk">234 €</div>
-          <div class="accom-price-unit">/ grupo</div>
-        </div>
-        <div class="accom-per">~33 €/persona</div>
-        <div class="accom-footer">
-          <div class="accom-pay">Pagar <strong>22 agosto</strong></div>
-          <div class="accom-link"><a href="https://www.airbnb.com/l/LWCQ19CH?s=67&unique_share_id=0db328a9-c4b7-446d-b65b-2443df0330d8" target="_blank">Ver en Airbnb ↗</a></div>
-        </div>
-      </div>
-    </div>
+      <li class="accom-card">
+        <header class="accom-header bg-cnx" style="color:#07100d">Chiang Mai</header>
+        <article class="accom-body">
+          <h3 class="accom-name">Skyzie</h3>
+          <p class="accom-dates">7 – 9 septiembre · 2 noches</p>
+          <p class="accom-price-row"><strong class="accom-price cnx">82 €</strong><span class="accom-price-unit">/ grupo</span></p>
+          <p class="accom-per">~12 €/persona</p>
+          <footer class="accom-footer">
+            <p class="accom-pay">Pagar <strong>3 septiembre</strong></p>
+            <p class="accom-link"><a href="https://www.booking.com/hotel/th/cozy-townhouse-with-1-day-chiangmai-tour.es.html" target="_blank">Ver en Booking ↗</a></p>
+          </footer>
+        </article>
+      </li>
+
+      <li class="accom-card">
+        <header class="accom-header bg-cei" style="color:#f2e8d0">Chiang Rai</header>
+        <article class="accom-body">
+          <h3 class="accom-name">Alojamiento para 6 !!!</h3>
+          <p class="accom-dates">9 – 10 septiembre · 1 noche</p>
+          <p class="accom-price-row"><strong class="accom-price cei">80 €</strong><span class="accom-price-unit">/ grupo</span></p>
+          <p class="accom-per">~11 €/persona</p>
+          <footer class="accom-footer">
+            <p class="accom-pay">Pagar <strong>31 agosto</strong></p>
+            <p class="accom-link"><a href="https://www.airbnb.com/l/ihQlTgom?s=67&unique_share_id=198fa5bf-f591-4246-8958-f882cec4876c" target="_blank">Ver en Airbnb ↗</a></p>
+          </footer>
+        </article>
+      </li>
+
+      <li class="accom-card">
+        <header class="accom-header bg-krabi" style="color:#07100d">Krabi</header>
+        <article class="accom-body">
+          <h3 class="accom-name">Hotel Krabi <span style="font-size:14px;color:var(--muted)">(2 noches: 10-11 y 12-13)</span></h3>
+          <p class="accom-dates">10–11 sept &amp; 12–13 sept</p>
+          <p class="accom-price-row"><strong class="accom-price krabi">260 €</strong><span class="accom-price-unit">/ grupo</span></p>
+          <p class="accom-per">~37 €/persona</p>
+          <footer class="accom-footer">
+            <p class="accom-pay">Pagar <strong>30 agosto</strong></p>
+            <p class="accom-link"><a href="https://es.trip.com/hotels/detail/?hotelId=6044647&checkIn=2026-09-12&checkOut=2026-09-13&locale=es-ES" target="_blank">Ver en Trip.com ↗</a></p>
+          </footer>
+        </article>
+      </li>
+
+      <li class="accom-card">
+        <header class="accom-header bg-krabi" style="color:#07100d">Phi Phi</header>
+        <article class="accom-body">
+          <h3 class="accom-name">Hotel/Resort Phi Phi</h3>
+          <p class="accom-dates">11 – 12 septiembre · 1 noche</p>
+          <p class="accom-price-row"><strong class="accom-price krabi">157 €</strong><span class="accom-price-unit">/ grupo</span></p>
+          <p class="accom-per">~22 €/persona</p>
+          <footer class="accom-footer">
+            <p class="accom-pay">Pagar <strong>30 agosto</strong></p>
+            <p class="accom-link"><a href="https://us.trip.com/hotels/detail/?hotelId=7601864" target="_blank">Ver en Trip.com ↗</a></p>
+          </footer>
+        </article>
+      </li>
+
+      <li class="accom-card">
+        <header class="accom-header bg-koh" style="color:#f2e8d0">Koh Tao</header>
+        <article class="accom-body">
+          <h3 class="accom-name">Villa Maravilla — Cape Shark Pool Villas</h3>
+          <p class="accom-dates">13 – 17 septiembre · 4 noches</p>
+          <p class="accom-price-row"><strong class="accom-price koh">1.400 €</strong><span class="accom-price-unit">/ grupo</span></p>
+          <p class="accom-per">~200 €/persona</p>
+          <footer class="accom-footer">
+            <p class="accom-pay">Pagar <strong>30 agosto</strong></p>
+            <p class="accom-link"><a href="https://www.booking.com/hotel/th/cape-shark-pool-villas.es.html" target="_blank">Ver en Booking ↗</a></p>
+          </footer>
+        </article>
+      </li>
+
+      <li class="accom-card">
+        <header class="accom-header bg-bkk" style="color:#07100d">Bangkok · Última noche</header>
+        <article class="accom-body">
+          <h3 class="accom-name">Alojamiento Bangkok final</h3>
+          <p class="accom-dates">17 – 18 septiembre · 1 noche</p>
+          <p class="accom-price-row"><strong class="accom-price bkk">68 €</strong><span class="accom-price-unit">/ grupo</span></p>
+          <p class="accom-per">~10 €/persona</p>
+          <footer class="accom-footer">
+            <p class="accom-pay">Pagar <strong>8 septiembre</strong></p>
+            <p class="accom-link"><a href="https://www.airbnb.com/l/BOOIpGcW?s=67&unique_share_id=4ca99444-2e10-4af6-8cd9-fd8dbc6df2b6" target="_blank">Ver en Airbnb ↗</a></p>
+          </footer>
+        </article>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- ITINERARIO -->
+  <hr class="divider">
+  <section id="itinerario">
+    <p class="section-label">Día a día</p>
+    <h2 class="section-title">Itinerario completo</h2>
+
+    <!-- Bangkok -->
+    <article class="city-block">
+      <header class="city-heading">
+        <span class="city-dot bg-bkk"></span>
+        <h3 class="city-name bkk">Bangkok</h3>
+        <span class="city-sub">4 – 7 septiembre</span>
+      </header>
+      <ol class="day-list">
+        <li class="day-item">
+          <header class="day-label"><strong>Vie 4 sept</strong>Llegada</header>
+          <p class="day-content">Llegada a Bangkok. El plan es llegar al hotel, cenar por Sukhumvit o Chinatown y no liaros mucho, porque el vuelo y el jet lag se notan.</p>
+        </li>
+        <li class="day-item">
+          <header class="day-label"><strong>Sáb 5 sept</strong>BKK histórico</header>
+          <section class="day-content">
+            <p><span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">🏯 Mañana cultural</span> Grand Palace y después Wat Arun. Ropa recatada obligatoria.</p>
+            <p><span class="day-highlight" style="background:rgba(62,191,176,.12);color:var(--teal)">🌆 Tarde</span> Río Chao Phraya y Chinatown para cenar.</p>
+            <p><span class="day-highlight" style="background:rgba(155,111,216,.12);color:var(--violet)">🍹 Noche</span> Copa en rooftop o Khao San. Ambiente pero sin acabar destrozados.</p>
+          </section>
+        </li>
+        <li class="day-item">
+          <header class="day-label"><strong>Dom 6 sept</strong>BKK moderno</header>
+          <section class="day-content">
+            <p>Brunch, centro comercial, masaje y mercado.</p>
+            <p><span class="day-highlight" style="background:rgba(155,111,216,.12);color:var(--violet)">🌃 Noche</span> Sukhumvit: bares y restaurantes. Noche más fuerte antes de los vuelos internos.</p>
+          </section>
+        </li>
+        <li class="day-item">
+          <header class="day-label"><strong>Lun 7 sept</strong>BKK → CNX</header>
+          <p class="day-content"><span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">✈️ Vuelo temprano</span> Bangkok → Chiang Mai (~1h 10 min, AirAsia). Check-in, comida, Nimman o mercado nocturno.</p>
+        </li>
+      </ol>
+    </article>
 
     <!-- Chiang Mai -->
-    <div class="accom-card">
-      <div class="accom-header bg-cnx" style="color:#07100d">Chiang Mai</div>
-      <div class="accom-body">
-        <div class="accom-name">Skyzie</div>
-        <div class="accom-dates">7 – 9 septiembre · 2 noches</div>
-        <div class="accom-price-row">
-          <div class="accom-price cnx">82 €</div>
-          <div class="accom-price-unit">/ grupo</div>
-        </div>
-        <div class="accom-per">~12 €/persona</div>
-        <div class="accom-footer">
-          <div class="accom-pay">Pagar <strong>3 septiembre</strong></div>
-          <div class="accom-link"><a href="https://www.booking.com/hotel/th/cozy-townhouse-with-1-day-chiangmai-tour.es.html" target="_blank">Ver en Booking ↗</a></div>
-        </div>
-      </div>
-    </div>
+    <article class="city-block">
+      <header class="city-heading">
+        <span class="city-dot bg-cnx"></span>
+        <h3 class="city-name cnx">Chiang Mai</h3>
+        <span class="city-sub">8 septiembre</span>
+      </header>
+      <ol class="day-list">
+        <li class="day-item">
+          <header class="day-label"><strong>Mar 8 sept</strong>Día completo</header>
+          <section class="day-content">
+            <p><span class="day-highlight" style="background:rgba(114,196,126,.12);color:var(--green)">🐘 8:00 - 13:00</span> Santuario de Elefantes Ético (Elephant Nature Park o Elephant Jungle Sanctuary).</p>
+            <p><span class="day-highlight" style="background:rgba(62,191,176,.12);color:var(--teal)">💦 13:30 - 16:00</span> Cascadas Bua Tong (Sticky Waterfalls).</p>
+            <p><span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">🌅 16:30 - 19:00</span> Wat Phra That Doi Suthep. Vistas panorámicas al atardecer.</p>
+            <p><span class="day-highlight" style="background:rgba(155,111,216,.12);color:var(--violet)">🌃 Noche</span> Night Bazaar: comida callejera, cervezas y cocktails.</p>
+          </section>
+        </li>
+      </ol>
+    </article>
 
     <!-- Chiang Rai -->
-    <div class="accom-card">
-      <div class="accom-header bg-cei" style="color:#f2e8d0">Chiang Rai</div>
-      <div class="accom-body">
-        <div class="accom-name">Alojamiento para 6 !!!</div>
-        <div class="accom-dates">9 – 10 septiembre · 1 noche</div>
-        <div class="accom-price-row">
-          <div class="accom-price cei">80 €</div>
-          <div class="accom-price-unit">/ grupo</div>
-        </div>
-        <div class="accom-per">~11 €/persona</div>
-        <div class="accom-footer">
-          <div class="accom-pay">Pagar <strong>31 agosto</strong></div>
-          <div class="accom-link"><a href="https://www.airbnb.com/l/ihQlTgom?s=67&unique_share_id=198fa5bf-f591-4246-8958-f882cec4876c" target="_blank">Ver en Airbnb ↗</a></div>
-        </div>
-      </div>
-    </div>
+    <article class="city-block">
+      <header class="city-heading">
+        <span class="city-dot bg-cei"></span>
+        <h3 class="city-name cei">Chiang Rai</h3>
+        <span class="city-sub">9 septiembre</span>
+      </header>
+      <ol class="day-list">
+        <li class="day-item">
+          <header class="day-label"><strong>Mié 9 sept</strong>CNX → CEI</header>
+          <section class="day-content">
+            <p><span class="day-highlight" style="background:rgba(155,111,216,.12);color:var(--violet)">🕌 Tarde</span> Templo Blanco, Templo Azul y Lalitta Café.</p>
+            <p><span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">🕙 19:00</span> Show de luces Torre del Reloj. Night Bazaar y música en directo.</p>
+            <p><span class="day-highlight" style="background:rgba(224,96,154,.12);color:var(--pink)">🎱 Noche</span> Calle Jetyod. Reggae Home &amp; Bar, billares y primeras copas.</p>
+          </section>
+        </li>
+      </ol>
+    </article>
 
     <!-- Krabi -->
-    <div class="accom-card">
-      <div class="accom-header bg-krabi" style="color:#07100d">Krabi</div>
-      <div class="accom-body">
-        <div class="accom-name">Hotel Krabi <span style="font-size:14px;color:var(--muted)">(2 noches: 10-11 y 12-13)</span></div>
-        <div class="accom-dates">10–11 sept &amp; 12–13 sept</div>
-        <div class="accom-price-row">
-          <div class="accom-price krabi">260 €</div>
-          <div class="accom-price-unit">/ grupo</div>
-        </div>
-        <div class="accom-per">~37 €/persona</div>
-        <div class="accom-footer">
-          <div class="accom-pay">Pagar <strong>30 agosto</strong></div>
-          <div class="accom-link"><a href="https://es.trip.com/hotels/detail/?hotelId=6044647&checkIn=2026-09-12&checkOut=2026-09-13&locale=es-ES" target="_blank">Ver en Trip.com ↗</a></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Phi Phi -->
-    <div class="accom-card">
-      <div class="accom-header bg-krabi" style="color:#07100d">Phi Phi</div>
-      <div class="accom-body">
-        <div class="accom-name">Hotel/Resort Phi Phi</div>
-        <div class="accom-dates">11 – 12 septiembre · 1 noche</div>
-        <div class="accom-price-row">
-          <div class="accom-price krabi">157 €</div>
-          <div class="accom-price-unit">/ grupo</div>
-        </div>
-        <div class="accom-per">~22 €/persona</div>
-        <div class="accom-footer">
-          <div class="accom-pay">Pagar <strong>30 agosto</strong></div>
-          <div class="accom-link"><a href="https://us.trip.com/hotels/detail/?hotelId=7601864" target="_blank">Ver en Trip.com ↗</a></div>
-        </div>
-      </div>
-    </div>
+    <article class="city-block">
+      <header class="city-heading">
+        <span class="city-dot bg-krabi"></span>
+        <h3 class="city-name krabi">Krabi + Phi Phi</h3>
+        <span class="city-sub">10 – 12 septiembre</span>
+      </header>
+      <ol class="day-list">
+        <li class="day-item">
+          <header class="day-label"><strong>Jue 10 sept</strong>CEI → Krabi 🎂</header>
+          <p class="day-content">Día pesado de viaje. <strong>¡Cumpleaños del soriano!</strong> Plan chill por la tarde y playa. Noche a fuego en Krabi.</p>
+        </li>
+        <li class="day-item">
+          <header class="day-label"><strong>Vie 11 sept</strong>Krabi → Phi Phi</header>
+          <p class="day-content">Llegada ~11:00. <em>Longtail</em> privado por la tarde: Monkey Beach, Viking Cave y atardecer en el mar.</p>
+        </li>
+        <li class="day-item">
+          <header class="day-label"><strong>Sáb 12 sept</strong>Phi Phi → Krabi</header>
+          <section class="day-content">
+            <p><span class="day-highlight" style="background:rgba(62,191,176,.12);color:var(--teal)">🌊 Mañana</span> Tour 6:30/7:00: Maya Bay, Pileh Lagoon y Bamboo Island.</p>
+            <p><span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">🌆 Tarde</span> Ferry Krabi 16:15. Cena con vistas.</p>
+          </section>
+        </li>
+      </ol>
+    </article>
 
     <!-- Koh Tao -->
-    <div class="accom-card">
-      <div class="accom-header bg-koh" style="color:#f2e8d0">Koh Tao</div>
-      <div class="accom-body">
-        <div class="accom-name">Villa Maravilla — Cape Shark Pool Villas</div>
-        <div class="accom-dates">13 – 17 septiembre · 4 noches</div>
-        <div class="accom-price-row">
-          <div class="accom-price koh">1.400 €</div>
-          <div class="accom-price-unit">/ grupo</div>
-        </div>
-        <div class="accom-per">~200 €/persona</div>
-        <div class="accom-footer">
-          <div class="accom-pay">Pagar <strong>30 agosto</strong></div>
-          <div class="accom-link"><a href="https://www.booking.com/hotel/th/cape-shark-pool-villas.es.html" target="_blank">Ver en Booking ↗</a></div>
-        </div>
-      </div>
-    </div>
+    <article class="city-block">
+      <header class="city-heading">
+        <span class="city-dot bg-koh"></span>
+        <h3 class="city-name koh">Koh Tao</h3>
+        <span class="city-sub">13 – 17 septiembre</span>
+      </header>
+      <ol class="day-list">
+        <li class="day-item">
+          <header class="day-label"><strong>Dom 13 sept</strong>Krabi → Koh Tao</header>
+          <p class="day-content">Llegada. Motos alquiladas. <strong>Sairee Beach</strong> y cocktails.</p>
+        </li>
+        <li class="day-item">
+          <header class="day-label"><strong>Lun 14 sept</strong>Snorkel y Sunset</header>
+          <p class="day-content">Playa, bautismo de buceo o snorkel. Noche de fiesta (¿party boat?).</p>
+        </li>
+        <li class="day-item">
+          <header class="day-label"><strong>Mar 15 sept</strong>Día de barco</header>
+          <p class="day-content">Barco privado toda la mañana, paradas en calas. Tarde: ambiente local, amigos tailandeses, fiesta en Villa Maravilla.</p>
+        </li>
+        <li class="day-item">
+          <header class="day-label"><strong>Mié 16 sept</strong>Último día</header>
+          <p class="day-content">Lugares escondidos, fotos, paisajes. Despedida con vistas al atardecer + cocktails.</p>
+        </li>
+      </ol>
+    </article>
 
-    <!-- Bangkok 2 -->
-    <div class="accom-card">
-      <div class="accom-header bg-bkk" style="color:#07100d">Bangkok · Última noche</div>
-      <div class="accom-body">
-        <div class="accom-name">Alojamiento Bangkok final</div>
-        <div class="accom-dates">17 – 18 septiembre · 1 noche</div>
-        <div class="accom-price-row">
-          <div class="accom-price bkk">68 €</div>
-          <div class="accom-price-unit">/ grupo</div>
-        </div>
-        <div class="accom-per">~10 €/persona</div>
-        <div class="accom-footer">
-          <div class="accom-pay">Pagar <strong>8 septiembre</strong></div>
-          <div class="accom-link"><a href="https://www.airbnb.com/l/BOOIpGcW?s=67&unique_share_id=4ca99444-2e10-4af6-8cd9-fd8dbc6df2b6" target="_blank">Ver en Airbnb ↗</a></div>
-        </div>
-      </div>
-    </div>
+    <!-- Bangkok final -->
+    <article class="city-block">
+      <header class="city-heading">
+        <span class="city-dot bg-bkk"></span>
+        <h3 class="city-name bkk">Bangkok · Final</h3>
+        <span class="city-sub">17 – 18 septiembre</span>
+      </header>
+      <ol class="day-list">
+        <li class="day-item">
+          <header class="day-label"><strong>Jue 17 sept</strong>Koh Tao → BKK</header>
+          <p class="day-content">Ferry → Chumphon, comemos ahí y vuelo Bangkok. Última noche: cocktails.</p>
+        </li>
+        <li class="day-item">
+          <header class="day-label"><strong>Vie 18 sept</strong>Vuelta a casa</header>
+          <p class="day-content">Vuelo 17:00. Desayuno largo, compras finales. Anécdotas del viaje + cocktail.</p>
+        </li>
+      </ol>
+    </article>
+  </section>
 
-  </div>
-</section>
+  <!-- PRESUPUESTO -->
+  <hr class="divider">
+  <section id="presupuesto">
+    <p class="section-label">Resumen de cuentas</p>
+    <h2 class="section-title">Presupuesto de alojamientos</h2>
+    <p class="budget-intro">Todos los alojamientos del viaje están fijados y confirmados.</p>
+    <figure class="budget-breakdown">
+      <figcaption class="breakdown-title">Desglose completo por destino — 7 personas</figcaption>
+      <table>
+        <thead>
+          <tr>
+            <th>Destino</th><th>Noches</th><th>Total grupo</th><th>Por persona</th><th>Pagar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>🟡 Bangkok (llegada)</td><td>3</td><td>234 €</td><td>~33 €</td><td>22 ago</td></tr>
+          <tr><td>🟢 Chiang Mai — Skyzie</td><td>2</td><td>82 €</td><td>~12 €</td><td>3 sept</td></tr>
+          <tr><td>🟣 Chiang Rai</td><td>1</td><td>80 €</td><td>~11 €</td><td>31 ago</td></tr>
+          <tr><td>🔵 Krabi — Hotel Krabi</td><td>2</td><td class="krabi-c">260 €</td><td class="krabi-c">~37 €</td><td>30 ago</td></tr>
+          <tr><td>🔵 Phi Phi — Resort</td><td>1</td><td>157 €</td><td>~22 €</td><td>30 ago</td></tr>
+          <tr><td>🩷 Koh Tao — Villa Maravilla</td><td>4</td><td style="color:var(--pink)">1.400 €</td><td style="color:var(--pink)">~200 €</td><td>30 ago</td></tr>
+          <tr><td>🟡 Bangkok (última noche)</td><td>1</td><td>68 €</td><td>~10 €</td><td>8 sept</td></tr>
+          <tr class="total-row">
+            <td class="total-row-label" colspan="2">TOTAL ALOJAMIENTOS</td>
+            <td class="total-val">2.281 €</td>
+            <td class="per-val">~326 €/p</td>
+            <td></td>
+          </tr>
+          <tr class="note-row"><td colspan="5">* Solo alojamientos. Transportes, actividades y manutención aparte.</td></tr>
+        </tbody>
+      </table>
+    </figure>
+  </section>
 
-<!-- ITINERARIO -->
-<hr class="divider">
-<section id="itinerario">
-  <div class="section-label">Día a día</div>
-  <div class="section-title">Itinerario completo</div>
+  <footer>
+    Tailandia 2026 · Grupo de 7 personas · Solo para uso interno del grupo
+  </footer>
 
-  <!-- Bangkok -->
-  <div class="city-block">
-    <div class="city-heading">
-      <div class="city-dot bg-bkk"></div>
-      <div class="city-name bkk">Bangkok</div>
-      <div class="city-sub">4 – 7 septiembre</div>
-    </div>
-    <div class="day-list">
-      <div class="day-item">
-        <div class="day-label"><strong>Vie 4 sept</strong>Llegada</div>
-        <div class="day-content">Llegada a Bangkok. El plan es llegar al hotel, cenar por Sukhumvit o Chinatown y no liaros mucho, porque el vuelo y el jet lag se notan.</div>
-      </div>
-      <div class="day-item">
-        <div class="day-label"><strong>Sáb 5 sept</strong>BKK histórico</div>
-        <div class="day-content">
-          <p><span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">🏯 Mañana cultural</span> Grand Palace y después Wat Arun (al otro lado del río). Norma importante (TAT): ropa recatada obligatoria, hombros cubiertos y pantalón largo o falda bajo la rodilla.</p>
-          <p><span class="day-highlight" style="background:rgba(62,191,176,.12);color:var(--teal)">🌆 Tarde</span> Genial para moveros por el río Chao Phraya y acabar en Chinatown para callejear y cenar.</p>
-          <p><span class="day-highlight" style="background:rgba(155,111,216,.12);color:var(--violet)">🍹 Noche</span> Copa tranquila en rooftop o meteros otra vez en Khao San. Ambiente pero sin acabar destrozados.</p>
-        </div>
-      </div>
-      <div class="day-item">
-        <div class="day-label"><strong>Dom 6 sept</strong>BKK moderno</div>
-        <div class="day-content">
-          <p>Día para una Bangkok más joven y menos de “ver monumentos”. Podéis hacer brunch, centro comercial, masaje y mercado.</p>
-          <p><span class="day-highlight" style="background:rgba(155,111,216,.12);color:var(--violet)">🌃 Noche</span> Sukhumvit da mucho juego para bares y restaurantes. Mezcla de descanso y ocio antes de los vuelos internos, y cerrar la noche algo más fuerte.</p>
-        </div>
-      </div>
-      <div class="day-item">
-        <div class="day-label"><strong>Lun 7 sept</strong>BKK → CNX</div>
-        <div class="day-content">
-          <span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">✈️ Vuelo temprano</span> Bangkok → Chiang Mai (~1h 10 min, AirAsia). Llegada, check-in, comida, paseo por el centro y noche tranquila por Nimman o mercado nocturno.
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- ═══ MODAL: Subir / editar billete ═══ -->
+  <dialog id="ticket-modal" class="modal-overlay">
+    <article class="modal-content">
+      <h3 id="modal-title">Subir billete</h3>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Transporte: <strong id="modal-transport-name" style="color:var(--cream)"></strong></p>
+      <label>Para confirmar, escribe <strong><span id="modal-traveler-name-display" style="color:var(--gold)"></span></strong>:</label>
+      <input type="text" id="modal-traveler-confirm" placeholder="Nombre del viajero" autocomplete="off">
+      <label>Enlace del billete (URL):</label>
+      <input type="text" id="modal-ticket-url" placeholder="https://…" autocomplete="off">
+      <label style="margin-top:12px;">Captura (Imagen):</label>
+      <input type="file" id="modal-ticket-image" accept="image/*">
+      <label style="margin-top:12px;">Documento (PDF):</label>
+      <input type="file" id="modal-ticket-pdf" accept="application/pdf">
+      <aside id="modal-upload-progress" class="upload-progress" style="display:none">
+        <meter class="progress-bar"><span class="progress-fill" id="progress-fill"></span></meter>
+        <span id="progress-label">Subiendo…</span>
+      </aside>
+      <p class="modal-error" id="modal-error"></p>
+      <footer class="modal-actions">
+        <menu style="display:flex;gap:8px;margin-right:auto;flex-wrap:wrap;">
+          <button id="btn-delete-url" class="btn-cancel danger" onclick="deleteTicketPart('url')" style="display:none">Borrar Enlace</button>
+          <button id="btn-delete-img" class="btn-cancel danger" onclick="deleteTicketPart('image')" style="display:none">Borrar Imagen</button>
+          <button id="btn-delete-pdf" class="btn-cancel danger" onclick="deleteTicketPart('pdf')" style="display:none">Borrar PDF</button>
+        </menu>
+        <button class="btn-cancel" onclick="closeTicketModal()">Cancelar</button>
+        <button class="btn-save" id="btn-save-ticket" onclick="saveTicket()">Guardar</button>
+      </footer>
+    </article>
+  </dialog>
 
-  <!-- Chiang Mai -->
-  <div class="city-block">
-    <div class="city-heading">
-      <div class="city-dot bg-cnx"></div>
-      <div class="city-name cnx">Chiang Mai</div>
-      <div class="city-sub">8 septiembre</div>
-    </div>
-    <div class="day-list">
-      <div class="day-item">
-        <div class="day-label"><strong>Mar 8 sept</strong>Día completo</div>
-        <div class="day-content">
-          <p><span class="day-highlight" style="background:rgba(114,196,126,.12);color:var(--green)">🐘 8:00 - 13:00</span> Santuario de Elefantes Ético (Elephant Nature Park o Elephant Jungle Sanctuary). Medio día con fotógrafo incluido, y de vuelta al centro a comer.</p>
-          <p><span class="day-highlight" style="background:rgba(62,191,176,.12);color:var(--teal)">💦 13:30 - 16:00</span> Alquilar van o motos e ir a las Cascadas Bua Tong (Sticky Waterfalls). Roca con minerales que no resbala, se puede escalar andando por el agua.</p>
-          <p><span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">🌅 16:30 - 19:00</span> Wat Phra That Doi Suthep. Menos gente, menos calor, templo iluminado y vistas panorámicas increíbles al atardecer.</p>
-          <p><span class="day-highlight" style="background:rgba(155,111,216,.12);color:var(--violet)">🌃 Noche</span> De vuelta en la ciudad, rematar la noche en el Night Bazaar para cenar comida callejera, tomar unas cervezas y beber cocktails.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- ═══ MODAL: Confirmar pago ═══ -->
+  <dialog id="confirm-modal" class="modal-overlay">
+    <article class="modal-content">
+      <h3>Confirmar Pago</h3>
+      <p style="font-size:14px;color:var(--muted);line-height:1.5;margin-top:8px;">
+        ¿Cambiar estado de <strong id="confirm-accom-name" style="color:var(--cream)"></strong> para <strong id="confirm-traveler-name" style="color:var(--gold)"></strong>?
+      </p>
+      <footer class="modal-actions">
+        <button class="btn-cancel" onclick="closeConfirmModal()">Cancelar</button>
+        <button class="btn-save" onclick="confirmToggleAccom()">Sí, cambiar</button>
+      </footer>
+    </article>
+  </dialog>
 
-  <!-- Chiang Rai -->
-  <div class="city-block">
-    <div class="city-heading">
-      <div class="city-dot bg-cei"></div>
-      <div class="city-name cei">Chiang Rai</div>
-      <div class="city-sub">9 septiembre</div>
-    </div>
-    <div class="day-list">
-      <div class="day-item">
-        <div class="day-label"><strong>Mié 9 sept</strong>CNX → CEI</div>
-        <div class="day-content">
-          <p><span class="day-highlight" style="background:rgba(155,111,216,.12);color:var(--violet)">🕌 Tarde de postureo</span> Templo Blanco y Templo Azul (por la tarde sin guiris). Parada obligatoria en Lalitta Café (bosque encantado) para fotos espectaculares.</p>
-          <p><span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">🕙 19:00 / 20:00</span> Show rápido de luces en la Torre del Reloj. Cena en el Night Bazaar: comida callejera, cervezas Chang/Leo tamaño grande y música en directo.</p>
-          <p><span class="day-highlight" style="background:rgba(224,96,154,.12);color:var(--pink)">🎱 Noche</span> Calentamiento en la calle Jetyod (zona joven). Reggae Home &amp; Bar o bares con billares gratis, primeras copas y a dormir.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- ═══ MODAL: Elegir ver enlace o imagen ═══ -->
+  <dialog id="view-choice-modal" class="modal-overlay">
+    <article class="modal-content" style="text-align:center">
+      <h3>¿Qué deseas ver?</h3>
+      <p style="font-size:13px;color:var(--muted);margin:10px 0 20px">Este billete tiene varias opciones guardadas.</p>
+      <menu style="display:flex;gap:12px;justify-content:center;margin-bottom:16px;" id="view-choice-buttons">
+        <button id="btn-choice-url" class="btn-save" onclick="openChoiceUrl()" style="background:transparent;border:1px solid var(--teal);color:var(--teal);display:none;">🌐 Enlace</button>
+        <button id="btn-choice-img" class="btn-save" onclick="openChoiceImage()" style="display:none;">🖼️ Imagen</button>
+        <button id="btn-choice-pdf" class="btn-save" onclick="openChoicePdf()" style="display:none;background:var(--violet);">📄 PDF</button>
+      </menu>
+      <button class="btn-cancel" onclick="closeViewChoiceModal()">Cancelar</button>
+    </article>
+  </dialog>
 
-  <!-- Krabi -->
-  <div class="city-block">
-    <div class="city-heading">
-      <div class="city-dot bg-krabi"></div>
-      <div class="city-name krabi">Krabi + Phi Phi</div>
-      <div class="city-sub">10 – 12 septiembre</div>
-    </div>
-    <div class="day-list">
-      <div class="day-item">
-        <div class="day-label"><strong>Jue 10 sept</strong>CEI → Krabi 🎂</div>
-        <div class="day-content">
-          Día pesado de viaje. <strong>¡Cumpleaños del soriano!</strong> Plan chill por la tarde visitando alguna playa cercana y probando un par de cocktails. Por la noche nos vamos a pegar fuego en Krabi, la misión es salir toda la noche por la zona del alojamiento.
-        </div>
-      </div>
-      <div class="day-item">
-        <div class="day-label"><strong>Vie 11 sept</strong>Krabi → Phi Phi</div>
-        <div class="day-content">
-          Llegada sobre las 11:00. Dejar las cosas en el hotel, comer tranquilamente y contratar un <em>longtail</em> privado por la tarde (unas 3 o 4 horas) para visitar la <strong>Monkey Beach</strong>, pasar por la Viking Cave y disfrutar del atardecer en el mar.
-        </div>
-      </div>
-      <div class="day-item">
-        <div class="day-label"><strong>Sáb 12 sept</strong>Phi Phi → Krabi</div>
-        <div class="day-content">
-          <p><span class="day-highlight" style="background:rgba(62,191,176,.12);color:var(--teal)">🌊 Mañana</span> Tour temprano (6:30 o 7:00) en lancha o longtail a <strong>Maya Bay</strong>, Pileh Lagoon y Bamboo Island. Ir temprano es clave para evitar multitudes. Vuelta al hotel, ducha y comer.</p>
-          <p><span class="day-highlight" style="background:rgba(212,168,67,.15);color:var(--gold)">🌆 Tarde</span> Ferry de regreso a Krabi a las 16:15. Visitar algún lugar que se haya quedado pendiente y cenar en un sitio con vistas.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- ═══ MODAL: Ver imagen ampliada ═══ -->
+  <dialog id="image-modal" class="modal-overlay" onclick="closeImageModal()">
+    <figure style="position:relative;max-width:90%;max-height:90vh" onclick="event.stopPropagation()">
+      <button onclick="closeImageModal()" style="position:absolute;top:-36px;right:0;background:transparent;border:none;color:var(--cream);font-size:28px;cursor:pointer">&times;</button>
+      <img id="image-modal-img" src="" style="max-width:100%;max-height:85vh;border-radius:12px;display:block;box-shadow:0 20px 40px rgba(0,0,0,.6)" alt="Billete">
+    </figure>
+  </dialog>
 
-  <!-- Koh Tao -->
-  <div class="city-block">
-    <div class="city-heading">
-      <div class="city-dot bg-koh"></div>
-      <div class="city-name koh">Koh Tao</div>
-      <div class="city-sub">13 – 17 septiembre</div>
-    </div>
-    <div class="day-list">
-      <div class="day-item">
-        <div class="day-label"><strong>Dom 13 sept</strong>Krabi → Koh Tao</div>
-        <div class="day-content">Llegada a Koh Tao. Unos se van al alojamiento a dejar las cosas y otros a alquilar motos para no perder tiempo (hasta el día 16). Ir en moto a <strong>Sairee Beach</strong> (playa más grande y principal) y beber cocktails.</div>
-      </div>
-      <div class="day-item">
-        <div class="day-label"><strong>Lun 14 sept</strong>Snorkel y Sunset</div>
-        <div class="day-content">
-          Empieza la parte más disfrutable. Día de playa, snorkel y cero prisas. Actividad estrella: bautismo de buceo o snorkel (isla top para submarinismo). Por la noche fiesta a fuego y cocktails. (¿Party boat? Depende de si vemos que puede rentar).
-        </div>
-      </div>
-      <div class="day-item">
-        <div class="day-label"><strong>Mar 15 sept</strong>Día de barco</div>
-        <div class="day-content">
-          Alquilar un barco para toda la mañana y parte de la tarde haciendo paradas en calas. Al terminar, excursión para descubrir el ambiente local, hacer amigos tailandeses y tomar cocktails con ellos. Intentar hacer fiesta en Villa Maravilla con gente.
-        </div>
-      </div>
-      <div class="day-item">
-        <div class="day-label"><strong>Mié 16 sept</strong>Último día</div>
-        <div class="day-content">
-          Adentrarnos un poco más en la isla, llamar a los colegas tailandeses e ir a lugares escondidos y perdidos para hacernos unas fotos y disfrutar del paisaje. Despedida en un restaurante con vistas al atardecer + cocktails.
-        </div>
-      </div>
-    </div>
-  </div>
+</main><!-- /#app -->
 
-  <!-- Bangkok final -->
-  <div class="city-block">
-    <div class="city-heading">
-      <div class="city-dot bg-bkk"></div>
-      <div class="city-name bkk">Bangkok · Final</div>
-      <div class="city-sub">17 – 18 septiembre</div>
-    </div>
-    <div class="day-list">
-      <div class="day-item">
-        <div class="day-label"><strong>Jue 17 sept</strong>Koh Tao → BKK</div>
-        <div class="day-content">Ferry Koh Tao → Chumphon, comemos ahí y cogemos vuelo a Bangkok. Es la última noche, deberíamos seguir con los cocktails.</div>
-      </div>
-      <div class="day-item">
-        <div class="day-label"><strong>Vie 18 sept</strong>Vuelta a casa</div>
-        <div class="day-content">Vuelo de vuelta a las 17:00. Mañana tranquila: desayuno largo, compras finales y salida al aeropuerto con margen. Nos damos cuenta de que nos hemos pasado con los cocktails y contamos anécdotas del viaje + cocktail.</div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<!-- PRESUPUESTO -->
-<hr class="divider">
-<section id="presupuesto">
-  <div class="section-label">Resumen de cuentas</div>
-  <div class="section-title">Presupuesto de alojamientos</div>
-
-  <div class="budget-intro">
-    Todos los alojamientos del viaje están fijados y confirmados.
-  </div>
-
-  <!-- Tabla desglose -->
-  <div class="budget-breakdown">
-    <div class="breakdown-title">Desglose completo por destino — 7 personas</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Destino</th>
-          <th>Noches</th>
-          <th>Total grupo</th>
-          <th>Por persona</th>
-          <th>Pagar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>🟡 Bangkok (llegada)</td>
-          <td>3</td>
-          <td>234 €</td>
-          <td>~33 €</td>
-          <td>22 ago</td>
-        </tr>
-        <tr>
-          <td>🟢 Chiang Mai — Skyzie</td>
-          <td>2</td>
-          <td>82 €</td>
-          <td>~12 €</td>
-          <td>3 sept</td>
-        </tr>
-        <tr>
-          <td>🟣 Chiang Rai</td>
-          <td>1</td>
-          <td>80 €</td>
-          <td>~11 €</td>
-          <td>31 ago</td>
-        </tr>
-        <tr>
-          <td>🔵 <strong>Krabi</strong> — Hotel Krabi</td>
-          <td>2</td>
-          <td class="krabi-c">260 €</td>
-          <td class="krabi-c">~37 €</td>
-          <td>30 ago</td>
-        </tr>
-        <tr>
-          <td>🔵 Phi Phi — Resort</td>
-          <td>1</td>
-          <td>157 €</td>
-          <td>~22 €</td>
-          <td>30 ago</td>
-        </tr>
-        <tr>
-          <td>🩷 Koh Tao — Villa Maravilla</td>
-          <td>4</td>
-          <td style="color:var(--pink)">1.400 €</td>
-          <td style="color:var(--pink)">~200 €</td>
-          <td>30 ago</td>
-        </tr>
-        <tr>
-          <td>🟡 Bangkok (última noche)</td>
-          <td>1</td>
-          <td>68 €</td>
-          <td>~10 €</td>
-          <td>8 sept</td>
-        </tr>
-        <tr class="total-row">
-          <td class="total-row-label" colspan="2">TOTAL ALOJAMIENTOS</td>
-          <td class="total-val">2.281 €</td>
-          <td class="per-val">~326 €/p</td>
-          <td></td>
-        </tr>
-        <tr class="note-row">
-          <td colspan="5">* Solo alojamientos.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-</section>
-
-<!-- MODAL BILLETES -->
-<div id="ticket-modal" class="modal-overlay">
-  <div class="modal-content">
-    <h3 id="modal-title">Subir billete</h3>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Transporte: <strong id="modal-transport-name" style="color:var(--cream)"></strong></p>
-    
-    <label>Para evitar errores, escribe <strong><span id="modal-traveler-name-display" style="color:var(--gold)"></span></strong>:</label>
-    <input type="text" id="modal-traveler-confirm" placeholder="Nombre del viajero" autocomplete="off">
-    
-    <label>Enlace del billete (URL):</label>
-    <input type="text" id="modal-ticket-url" placeholder="https://..." autocomplete="off">
-    
-    <div style="text-align:center;margin:16px 0;font-size:11px;color:var(--muted);letter-spacing:.1em;">O SUBIR CAPTURA</div>
-    
-    <input type="file" id="modal-ticket-file" accept="image/*">
-    
-    <div style="color:var(--coral);font-size:12px;margin-top:12px;text-align:center;font-weight:500;" id="modal-error"></div>
-    
-    <div class="modal-actions">
-      <div style="display:flex; gap:8px; margin-right:auto; flex-wrap:wrap;">
-        <button id="btn-delete-url" class="btn-cancel" onclick="deleteTicketPart('url')" style="display:none; color:var(--coral); border-color:rgba(224,107,107,0.4); padding:8px 10px; font-size:12px;">Borrar Enlace</button>
-        <button id="btn-delete-img" class="btn-cancel" onclick="deleteTicketPart('image')" style="display:none; color:var(--coral); border-color:rgba(224,107,107,0.4); padding:8px 10px; font-size:12px;">Borrar Foto</button>
-      </div>
-      <button class="btn-cancel" onclick="closeTicketModal()">Cancelar</button>
-      <button class="btn-save" onclick="saveTicket()">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL CONFIRMACIÓN PAGO -->
-<div id="confirm-modal" class="modal-overlay">
-  <div class="modal-content">
-    <h3 style="color:var(--cream);margin-bottom:12px;">Confirmar Pago</h3>
-    <p style="font-size:14px;color:var(--muted);line-height:1.5;">¿Seguro que quieres cambiar el estado de pago de <strong id="confirm-accom-name" style="color:var(--cream)"></strong> para <strong id="confirm-traveler-name" style="color:var(--gold)"></strong>?</p>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeConfirmModal()">Cancelar</button>
-      <button class="btn-save" onclick="confirmToggleAccom()">Sí, cambiar</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL ELEGIR VISTA -->
-<div id="view-choice-modal" class="modal-overlay">
-  <div class="modal-content" style="text-align: center;">
-    <h3 style="color:var(--cream);margin-bottom:12px;">¿Qué deseas ver?</h3>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Este billete tiene guardado tanto un enlace como una captura.</p>
-    <div style="display:flex; gap:12px; justify-content:center; margin-bottom:16px;">
-      <button class="btn-save" onclick="openChoiceUrl()" style="background:transparent; border:1px solid var(--teal); color:var(--teal);">🌐 Enlace</button>
-      <button class="btn-save" onclick="openChoiceImage()">🖼️ Foto</button>
-    </div>
-    <button class="btn-cancel" onclick="closeViewChoiceModal()">Cancelar</button>
-  </div>
-</div>
-
-<!-- MODAL VER IMAGEN -->
-<div id="image-modal" class="modal-overlay" onclick="closeImageModal()">
-  <div style="position: relative; max-width: 90%; max-height: 90vh;" onclick="event.stopPropagation()">
-    <button onclick="closeImageModal()" style="position: absolute; top: -36px; right: 0; background: transparent; border: none; color: var(--cream); font-size: 28px; cursor: pointer;">&times;</button>
-    <img id="image-modal-img" src="" style="max-width: 100%; max-height: 85vh; border-radius: 12px; display: block; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
-  </div>
-</div>
-
-<footer>
-  Tailandia 2026 · Grupo de 7 personas · Generado desde el planning original · Solo para uso interno del grupo
-</footer>
-
-<script>
-
-  function showSection(id, event) {
-    if (event) event.preventDefault();
-
-    // Cerrar menú móvil si está abierto
-    document.getElementById('navbar').classList.remove('open');
-
-    // Ocultar todas las secciones
-    document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-
-    // Mostrar la sección seleccionada y hacer scroll hacia ella
-    const target = document.getElementById(id);
-    if (target) {
-      target.classList.add('active');
-      window.scrollTo({ top: document.querySelector('.hero').offsetHeight, behavior: 'smooth' });
-    }
-
-    // Cambiar color del botón activo en el nav
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-nav'));
-    const activeLink = document.querySelector(`nav a[href="#${id}"]`);
-    if (activeLink) activeLink.classList.add('active-nav');
-  }
-
-
-  // Animate sections on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.06 });
-
-  document.querySelectorAll('.transport-card, .accom-card, .city-block, .scenario, .budget-breakdown').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity .5s ease, transform .5s ease';
-    observer.observe(el);
-  });
-
-  // --- LÓGICA DE BILLETES ---
-  const travelers = ['Guillermo Garcia', 'Javier Simón', 'Gerardo Rubio', 'Francisco Soriano', 'Carlos Jimenez', 'Mario Montes', 'Ivan Martínez'];
-  const transportsList = [
-    { id: 't1', name: 'Madrid ↔ Bangkok' },
-    { id: 't2', name: 'Bangkok → Chiang Mai' },
-    { id: 't3', name: 'Chiang Mai → Chiang Rai' },
-    { id: 't4', name: 'Chiang Rai → Krabi' },
-    { id: 't5', name: 'Krabi ↔ Phi Phi' },
-    { id: 't6', name: 'Krabi → Koh Tao' },
-    { id: 't7', name: 'Koh Tao → Chumphon' },
-    { id: 't8', name: 'Chumphon → Bangkok' }
-  ];
-
-  const accomsList = [
-    { id: 'a1', name: 'Bangkok 1 (Llegada)' },
-    { id: 'a2', name: 'Chiang Mai (Skyzie)' },
-    { id: 'a3', name: 'Chiang Rai' },
-    { id: 'a4', name: 'Krabi (Hotel Krabi)' },
-    { id: 'a5', name: 'Phi Phi (Resort)' },
-    { id: 'a6', name: 'Koh Tao (Villa Maravilla)' },
-    { id: 'a7', name: 'Bangkok 2 (Final)' }
-  ];
-
-  let ticketsData = JSON.parse(localStorage.getItem('tailandia_tickets')) || {};
-  let accomsPaidData = JSON.parse(localStorage.getItem('tailandia_accoms_paid')) || {};
-
-  function renderTravelers() {
-    const container = document.getElementById('travelers-container');
-    if (!container) return;
-    container.innerHTML = '';
-    
-    travelers.forEach(traveler => {
-      const card = document.createElement('div');
-      card.className = 'traveler-card';
-      
-      let html = `<div class="traveler-name">👤 ${traveler}</div><div class="t-list">`;
-      
-      html += `<div class="t-subtitle">Transportes</div>`;
-      transportsList.forEach(t => {
-        let ticketRaw = ticketsData[traveler] && ticketsData[traveler][t.id];
-        let ticketObj = null;
-        if (ticketRaw) {
-          // Adaptar billetes antiguos al nuevo formato automáticamente
-          if (typeof ticketRaw === 'string') {
-            ticketObj = ticketRaw.startsWith('data:') ? { image: ticketRaw, url: '' } : { url: ticketRaw, image: '' };
-            ticketsData[traveler][t.id] = ticketObj;
-          } else {
-            ticketObj = ticketRaw;
-          }
-        }
-        const hasTicket = ticketObj && (ticketObj.url || ticketObj.image);
-        const statusClass = hasTicket ? 'done' : '';
-        
-        html += `
-          <div class="traveler-transport">
-            <div class="t-info">
-              <div class="t-status ${statusClass}"></div>
-              <div>${t.name}</div>
-            </div>
-            <div class="t-actions">
-              ${hasTicket ? `<button class="btn-action btn-view" onclick="handleViewClick('${traveler}', '${t.id}')">Ver</button>` : ''}
-              <button class="btn-action" onclick="openTicketModal('${traveler}', '${t.id}', '${t.name}')">${hasTicket ? 'Editar' : 'Subir'}</button>
-            </div>
-          </div>
-        `;
-      });
-
-      html += `<div class="t-subtitle">Alojamientos</div>`;
-      accomsList.forEach(a => {
-        const isPaid = accomsPaidData[traveler] && accomsPaidData[traveler][a.id];
-        html += `
-          <div class="traveler-transport">
-            <div class="t-info">
-              <div>🛏️ ${a.name}</div>
-            </div>
-            <div class="t-actions">
-              <button class="btn-action ${isPaid ? 'is-paid' : ''}" onclick="openConfirmModal('${traveler}', '${a.id}', '${a.name}')">${isPaid ? '✅ Pagado' : '💳 Pagar'}</button>
-            </div>
-          </div>
-        `;
-      });
-      
-      html += `</div>`;
-      card.innerHTML = html;
-      container.appendChild(card);
-      
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(20px)';
-      card.style.transition = 'opacity .5s ease, transform .5s ease';
-      observer.observe(card);
-    });
-  }
-
-  let currentModalTraveler = '';
-  let currentModalTransportId = '';
-
-  function openTicketModal(traveler, transportId, transportName) {
-    currentModalTraveler = traveler;
-    currentModalTransportId = transportId;
-    
-    document.getElementById('modal-traveler-name-display').innerText = traveler;
-    document.getElementById('modal-transport-name').innerText = transportName;
-    document.getElementById('modal-traveler-confirm').value = '';
-    document.getElementById('modal-ticket-url').value = '';
-    document.getElementById('modal-ticket-file').value = '';
-    document.getElementById('modal-error').innerText = '';
-
-    let existingData = ticketsData[traveler] && ticketsData[traveler][transportId];
-    let hasUrl = false;
-    let hasImg = false;
-    if (existingData) {
-      if (typeof existingData === 'string') {
-        if (existingData.startsWith('data:')) hasImg = true;
-        else hasUrl = true;
-      } else {
-        hasUrl = !!existingData.url;
-        hasImg = !!existingData.image;
-      }
-    }
-    document.getElementById('btn-delete-url').style.display = hasUrl ? 'block' : 'none';
-    document.getElementById('btn-delete-img').style.display = hasImg ? 'block' : 'none';
-    
-    document.getElementById('ticket-modal').classList.add('active');
-  }
-
-  function closeTicketModal() {
-    document.getElementById('ticket-modal').classList.remove('active');
-  }
-
-  function deleteTicketPart(part) {
-    const confirmName = document.getElementById('modal-traveler-confirm').value.trim();
-    if (confirmName.toLowerCase() !== currentModalTraveler.toLowerCase()) {
-      document.getElementById('modal-error').innerText = 'Error: Escribe "' + currentModalTraveler + '" para confirmar el borrado.';
-      return;
-    }
-    
-    let existingData = ticketsData[currentModalTraveler] && ticketsData[currentModalTraveler][currentModalTransportId];
-    if (existingData) {
-      if (typeof existingData === 'string') {
-        delete ticketsData[currentModalTraveler][currentModalTransportId];
-      } else {
-        existingData[part] = '';
-        if (!existingData.url && !existingData.image) {
-          delete ticketsData[currentModalTraveler][currentModalTransportId];
-        }
-      }
-      localStorage.setItem('tailandia_tickets', JSON.stringify(ticketsData));
-    }
-    
-    closeTicketModal();
-    renderTravelers();
-  }
-
-  function saveTicket() {
-    const confirmName = document.getElementById('modal-traveler-confirm').value.trim();
-    if (confirmName.toLowerCase() !== currentModalTraveler.toLowerCase()) {
-      document.getElementById('modal-error').innerText = 'Error: Escribe "' + currentModalTraveler + '" para confirmar.';
-      return;
-    }
-    
-    let urlInput = document.getElementById('modal-ticket-url').value.trim();
-    const fileInput = document.getElementById('modal-ticket-file').files[0];
-    
-    if (!urlInput && !fileInput) {
-      document.getElementById('modal-error').innerText = 'Debes introducir un enlace o subir una captura.';
-      return;
-    }
-
-    if (urlInput && !/^https?:\/\//i.test(urlInput)) {
-      urlInput = 'https://' + urlInput;
-    }
-
-    if (!ticketsData[currentModalTraveler]) {
-      ticketsData[currentModalTraveler] = {};
-    }
-    
-    let existingData = ticketsData[currentModalTraveler][currentModalTransportId];
-    if (typeof existingData === 'string') {
-      existingData = existingData.startsWith('data:') ? { image: existingData, url: '' } : { url: existingData, image: '' };
-    } else if (!existingData) {
-      existingData = { url: '', image: '' };
-    }
-
-    if (fileInput) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        existingData.image = e.target.result;
-        if (urlInput) existingData.url = urlInput;
-        saveToData(currentModalTraveler, currentModalTransportId, existingData);
-      };
-      reader.readAsDataURL(fileInput);
-    } else {
-      if (urlInput) existingData.url = urlInput;
-      saveToData(currentModalTraveler, currentModalTransportId, existingData);
-    }
-  }
-
-  function saveToData(traveler, transportId, value) {
-    if (!ticketsData[traveler]) {
-      ticketsData[traveler] = {};
-    }
-    ticketsData[traveler][transportId] = value;
-    
-    try {
-      localStorage.setItem('tailandia_tickets', JSON.stringify(ticketsData));
-      closeTicketModal();
-      renderTravelers();
-    } catch(e) {
-      document.getElementById('modal-error').innerText = "Error: La imagen es demasiado pesada. Usa un enlace o comprime la imagen.";
-    }
-  }
-
-  let currentConfirmTraveler = '';
-  let currentConfirmAccomId = '';
-
-  function openConfirmModal(traveler, accomId, accomName) {
-    currentConfirmTraveler = traveler;
-    currentConfirmAccomId = accomId;
-    document.getElementById('confirm-accom-name').innerText = accomName;
-    document.getElementById('confirm-traveler-name').innerText = traveler;
-    document.getElementById('confirm-modal').classList.add('active');
-  }
-
-  function closeConfirmModal() {
-    document.getElementById('confirm-modal').classList.remove('active');
-  }
-
-  function confirmToggleAccom() {
-    if (!accomsPaidData[currentConfirmTraveler]) {
-      accomsPaidData[currentConfirmTraveler] = {};
-    }
-    accomsPaidData[currentConfirmTraveler][currentConfirmAccomId] = !accomsPaidData[currentConfirmTraveler][currentConfirmAccomId];
-    localStorage.setItem('tailandia_accoms_paid', JSON.stringify(accomsPaidData));
-    closeConfirmModal();
-    renderTravelers();
-  }
-
-  let currentViewTraveler = '';
-  let currentViewTransportId = '';
-
-  function handleViewClick(traveler, transportId) {
-    const ticket = ticketsData[traveler][transportId];
-    if (!ticket) return;
-
-    if (ticket.url && ticket.image) {
-      currentViewTraveler = traveler;
-      currentViewTransportId = transportId;
-      document.getElementById('view-choice-modal').classList.add('active');
-    } else if (ticket.url) {
-      window.open(ticket.url, '_blank');
-    } else if (ticket.image) {
-      openImageModalWithData(ticket.image);
-    }
-  }
-
-  function closeViewChoiceModal() {
-    document.getElementById('view-choice-modal').classList.remove('active');
-  }
-
-  function openChoiceUrl() {
-    closeViewChoiceModal();
-    const ticket = ticketsData[currentViewTraveler][currentViewTransportId];
-    if (ticket && ticket.url) window.open(ticket.url, '_blank');
-  }
-
-  function openChoiceImage() {
-    closeViewChoiceModal();
-    const ticket = ticketsData[currentViewTraveler][currentViewTransportId];
-    if (ticket && ticket.image) openImageModalWithData(ticket.image);
-  }
-
-  function openImageModalWithData(imgData) {
-    document.getElementById('image-modal-img').src = imgData;
-    document.getElementById('image-modal').classList.add('active');
-  }
-
-  function closeImageModal() {
-    document.getElementById('image-modal').classList.remove('active');
-    setTimeout(() => { document.getElementById('image-modal-img').src = ''; }, 300);
-  }
-
-  renderTravelers();
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
 </body>
 </html>
