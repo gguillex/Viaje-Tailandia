@@ -65,6 +65,7 @@
     <a href="#transportes" class="active-nav" onclick="showSection('transportes', event)">Transportes</a>
     <a href="#billetes"    onclick="showSection('billetes', event)">Billetes</a>
     <a href="#alojamientos" onclick="showSection('alojamientos', event)">Alojamientos</a>
+    <a href="#actividades" onclick="showSection('actividades', event)">Actividades</a>
     <a href="#itinerario"  onclick="showSection('itinerario', event)">Itinerario</a>
     <a href="#presupuesto" onclick="showSection('presupuesto', event)">Presupuesto</a>
     <button class="nav-logout" onclick="logout()" title="Cerrar sesión">⏻</button>
@@ -279,6 +280,49 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ACTIVIDADES -->
+  <hr class="divider">
+  <section id="actividades">
+    <div class="section-label">Ideas y Planes</div>
+    <div class="section-title">Actividades</div>
+    
+    <div style="display: flex; flex-direction: column; gap: 32px;">
+      <!-- Actividades Confirmadas -->
+      <div>
+        <h3 style="color: var(--gold); margin-bottom: 16px;">✅ Actividades Confirmadas</h3>
+        <div class="transport-grid" id="confirmed-activities-list">
+          <!-- JS inserta las confirmadas aquí -->
+        </div>
+      </div>
+
+      <!-- Propuestas de los viajeros -->
+      <div>
+        <h3 style="color: var(--teal); margin-bottom: 16px;">💡 Propuestas y Debate</h3>
+        <div class="travelers-grid" id="proposed-activities-list" style="margin-bottom: 16px;">
+          <!-- JS inserta las propuestas aquí -->
+        </div>
+
+        <div class="auth-card" style="margin: 0; max-width: 100%; text-align: left; padding: 20px;">
+          <h4 style="margin-top: 0; color: var(--cream);">Añadir nueva propuesta</h4>
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+            <select id="proposal-traveler" style="padding: 10px; border-radius: 8px; background: #1e1e1e; color: #fff; border: 1px solid rgba(255,255,255,0.1); font-family: inherit; cursor: pointer;">
+              <option value="" style="background: #1e1e1e; color: #fff;">¿Quién propone?</option>
+              <option value="Guillermo Garcia" style="background: #1e1e1e; color: #fff;">Guillermo Garcia</option>
+              <option value="Javier Simón" style="background: #1e1e1e; color: #fff;">Javier Simón</option>
+              <option value="Gerardo Rubio" style="background: #1e1e1e; color: #fff;">Gerardo Rubio</option>
+              <option value="Francisco Soriano" style="background: #1e1e1e; color: #fff;">Francisco Soriano</option>
+              <option value="Carlos Jimenez" style="background: #1e1e1e; color: #fff;">Carlos Jimenez</option>
+              <option value="Mario Montes" style="background: #1e1e1e; color: #fff;">Mario Montes</option>
+              <option value="Ivan Martínez" style="background: #1e1e1e; color: #fff;">Ivan Martínez</option>
+            </select>
+            <textarea id="proposal-text" rows="3" placeholder="Ej: Podríamos alquilar un barco privado en Koh Tao para el día 15..." style="padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); width: 100%; box-sizing: border-box; font-family: inherit; resize: vertical;"></textarea>
+            <button class="btn-save" onclick="addProposal()" style="align-self: flex-start;">Enviar Propuesta</button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -535,6 +579,66 @@
     <div style="position:relative;max-width:90%;max-height:90vh" onclick="event.stopPropagation()">
       <button onclick="closeImageModal()" style="position:absolute;top:-36px;right:0;background:transparent;border:none;color:var(--cream);font-size:28px;cursor:pointer">&times;</button>
       <img id="image-modal-img" src="" style="max-width:100%;max-height:85vh;border-radius:12px;display:block;box-shadow:0 20px 40px rgba(0,0,0,.6)">
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: Confirmar Actividad ═══ -->
+  <div id="activity-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Aprobar Propuesta</h3>
+      <p style="font-size:14px;color:var(--muted);line-height:1.5;margin-top:8px;">Añadir detalles de fecha o lugar para la actividad:<br><strong id="activity-modal-desc" style="color:var(--cream)"></strong></p>
+      <label style="margin-top:12px;">Detalles (fecha, lugar...):</label>
+      <input type="text" id="activity-modal-detail" placeholder="Ej: Koh Tao · 15 Septiembre" autocomplete="off" value="Por determinar" style="width: 100%; padding: 10px; border-radius: 8px; background: #1e1e1e; color: #fff; border: 1px solid rgba(255,255,255,0.2); font-family: inherit; margin-top: 8px; box-sizing: border-box;">
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeActivityModal()">Cancelar</button>
+        <button class="btn-save" onclick="saveActivityConfirm()">Aprobar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: Votar Propuesta ═══ -->
+  <div id="vote-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Votar Propuesta</h3>
+      <p style="font-size:14px;color:var(--muted);line-height:1.5;margin-top:8px;">Selecciona quién eres para registrar tu voto:</p>
+      <select id="vote-traveler" style="width: 100%; padding: 10px; border-radius: 8px; background: #1e1e1e; color: #fff; border: 1px solid rgba(255,255,255,0.2); font-family: inherit; margin-top: 12px; box-sizing: border-box; cursor: pointer;">
+        <option value="" style="background: #1e1e1e; color: #fff;">¿Quién eres?</option>
+        <option value="Guillermo Garcia" style="background: #1e1e1e; color: #fff;">Guillermo Garcia</option>
+        <option value="Javier Simón" style="background: #1e1e1e; color: #fff;">Javier Simón</option>
+        <option value="Gerardo Rubio" style="background: #1e1e1e; color: #fff;">Gerardo Rubio</option>
+        <option value="Francisco Soriano" style="background: #1e1e1e; color: #fff;">Francisco Soriano</option>
+        <option value="Carlos Jimenez" style="background: #1e1e1e; color: #fff;">Carlos Jimenez</option>
+        <option value="Mario Montes" style="background: #1e1e1e; color: #fff;">Mario Montes</option>
+        <option value="Ivan Martínez" style="background: #1e1e1e; color: #fff;">Ivan Martínez</option>
+      </select>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeVoteModal()">Cancelar</button>
+        <button class="btn-save" onclick="submitVote()">Votar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: Devolver Actividad a Propuestas ═══ -->
+  <div id="unconfirm-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Devolver a propuestas</h3>
+      <p style="font-size:14px;color:var(--muted);line-height:1.5;margin-top:8px;">¿Quieres devolver esta actividad a la lista de propuestas?</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeUnconfirmModal()">Cancelar</button>
+        <button class="btn-save" onclick="executeUnconfirmActivity()">Sí, devolver</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: Eliminar Propuesta ═══ -->
+  <div id="delete-proposal-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Eliminar Propuesta</h3>
+      <p style="font-size:14px;color:var(--muted);line-height:1.5;margin-top:8px;">¿Estás seguro de que quieres eliminar esta propuesta?</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeDeleteProposalModal()">Cancelar</button>
+        <button class="btn-cancel danger" onclick="executeDeleteProposal()">Eliminar</button>
+      </div>
     </div>
   </div>
 
