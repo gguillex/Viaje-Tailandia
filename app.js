@@ -791,7 +791,288 @@ function closeImageModal() {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// 12. INTERSECTION OBSERVER
+// 12. UI — ACTIVIDADES
+// ─────────────────────────────────────────────────────────────────
+
+// Utilizamos localStorage para poder mostrarlo inmediatamente. 
+// Si en el futuro quieres sincronizarlo entre todos en vivo, deberás guardarlo en Supabase llamando a tu api().
+let proposalsCache = JSON.parse(localStorage.getItem('th26_proposals')) || [
+  { id: 1, traveler: 'Guillermo Garcia', text: 'Alquilar un barco privado en Koh Tao para el día 15.', date: new Date().toISOString(), likes: [], dislikes: [] }
+];
+
+let confirmedActivitiesCache = JSON.parse(localStorage.getItem('th26_confirmed_activities')) || [
+  { id: 101, name: '🐘 Santuario de Elefantes', date: 'Chiang Mai · 8 de septiembre' },
+  { id: 102, name: '⛵ Tour Maya Bay y Pileh Lagoon', date: 'Phi Phi · 12 de septiembre' }
+];
+
+function renderProposals() {
+  const container = document.getElementById('proposed-activities-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (proposalsCache.length === 0) {
+    container.innerHTML = '<div style="color:var(--muted); font-size:14px; grid-column: 1/-1;">Aún no hay propuestas. ¡Anímate a ser el primero!</div>';
+    return;
+  }
+
+  proposalsCache.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'traveler-card';
+    card.style.opacity = '1';
+    card.style.transform = 'none';
+    
+    card.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="traveler-name" style="font-size:14px; color:var(--gold);">👤 ${escHtml(p.traveler)}</div>
+        <button class="btn-action btn-view" style="padding: 4px 8px; font-size: 14px; border-color: rgba(255,77,77,0.3); color: #ff4d4d;" onclick="deleteProposal(${p.id})" title="Eliminar propuesta">🗑️</button>
+      </div>
+      <div style="margin-top:8px; font-size:15px; line-height:1.4;">${escHtml(p.text)}</div>
+      <div style="margin-top:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 8px;">
+        <span style="font-size:11px; color:var(--muted);">${new Date(p.date).toLocaleDateString()}</span>
+        <div style="display:flex; gap: 8px;">
+          <button class="btn-action btn-view" style="padding: 4px 8px; font-size: 12px;" onclick="openVoteModal(${p.id}, 1)">👍 ${Array.isArray(p.likes) ? p.likes.length : 0}</button>
+          <button class="btn-action btn-view" style="padding: 4px 8px; font-size: 12px;" onclick="openVoteModal(${p.id}, -1)">👎 ${Array.isArray(p.dislikes) ? p.dislikes.length : 0}</button>
+          <button class="btn-action" style="padding: 4px 8px; font-size: 12px;" onclick="confirmProposal(${p.id})">✅ Aprobar</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderConfirmedActivities() {
+  const container = document.getElementById('confirmed-activities-list');
+  if (!container) return;
+  container.innerHTML = '';
+  
+  if (confirmedActivitiesCache.length === 0) {
+    container.innerHTML = '<div style="color:var(--muted); font-size:14px; grid-column: 1/-1;">Aún no hay actividades confirmadas.</div>';
+    return;
+  }
+
+  confirmedActivitiesCache.forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'transport-card'; 
+    card.style.opacity = '1';
+    card.style.transform = 'none';
+
+    card.innerHTML = `
+      <div class="transport-top">
+        <div class="transport-name">${escHtml(a.name)}</div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="badge ok">Confirmada</span>
+          <button class="btn-action btn-view" style="padding: 4px 8px; font-size: 12px;" onclick="unconfirmActivity(${a.id})" title="Devolver a propuestas">↩️</button>
+        </div>
+      </div>
+      <div class="transport-date" style="margin-top: 8px; color:var(--muted); font-size: 13px;">${escHtml(a.date || 'Fecha por determinar')}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function addProposal() {
+  const traveler = document.getElementById('proposal-traveler').value;
+  const text = document.getElementById('proposal-text').value.trim();
+
+  if (!traveler) {
+    alert('Por favor, selecciona quién eres.');
+    return;
+  }
+  if (!text) {
+    alert('Por favor, escribe una propuesta.');
+    return;
+  }
+
+  const newProp = {
+    id: Date.now(),
+    traveler,
+    text,
+    date: new Date().toISOString(),
+    likes: [],
+    dislikes: []
+  };
+
+  proposalsCache.push(newProp);
+  localStorage.setItem('th26_proposals', JSON.stringify(proposalsCache));
+  
+  document.getElementById('proposal-text').value = '';
+  renderProposals();
+}
+
+let currentActivityIdToConfirm = null;
+
+function confirmProposal(id) {
+  const index = proposalsCache.findIndex(p => p.id === id);
+  if (index === -1) return;
+  
+  const prop = proposalsCache[index];
+  
+  currentActivityIdToConfirm = id;
+  document.getElementById('activity-modal-desc').textContent = prop.text;
+  document.getElementById('activity-modal-detail').value = "Por determinar";
+  
+  document.getElementById('activity-modal').classList.add('active');
+  setTimeout(() => document.getElementById('activity-modal-detail').focus(), 100);
+}
+
+function closeActivityModal() {
+  document.getElementById('activity-modal').classList.remove('active');
+  currentActivityIdToConfirm = null;
+}
+
+function saveActivityConfirm() {
+  if (currentActivityIdToConfirm === null) return;
+  
+  const id = currentActivityIdToConfirm;
+  const index = proposalsCache.findIndex(p => p.id === id);
+  if (index === -1) {
+    closeActivityModal();
+    return;
+  }
+  
+  const prop = proposalsCache[index];
+  const detail = document.getElementById('activity-modal-detail').value.trim() || "Por determinar";
+
+  // Pasamos la propuesta a confirmadas
+  confirmedActivitiesCache.push({ 
+    id: prop.id, 
+    name: prop.text, 
+    date: detail,
+    traveler: prop.traveler,
+    originalDate: prop.date
+  });
+  localStorage.setItem('th26_confirmed_activities', JSON.stringify(confirmedActivitiesCache));
+
+  // La quitamos de propuestas
+  proposalsCache.splice(index, 1);
+  localStorage.setItem('th26_proposals', JSON.stringify(proposalsCache));
+
+  renderProposals();
+  renderConfirmedActivities();
+  closeActivityModal();
+}
+
+let currentActivityIdToUnconfirm = null;
+
+function unconfirmActivity(id) {
+  currentActivityIdToUnconfirm = id;
+  document.getElementById('unconfirm-modal').classList.add('active');
+}
+
+function closeUnconfirmModal() {
+  document.getElementById('unconfirm-modal').classList.remove('active');
+  currentActivityIdToUnconfirm = null;
+}
+
+function executeUnconfirmActivity() {
+  if (currentActivityIdToUnconfirm === null) return;
+  const index = confirmedActivitiesCache.findIndex(a => a.id === currentActivityIdToUnconfirm);
+  if (index === -1) {
+    closeUnconfirmModal();
+    return;
+  }
+  
+  const activity = confirmedActivitiesCache[index];
+  
+  // La añadimos de nuevo a propuestas
+  proposalsCache.push({
+    id: activity.id,
+    traveler: activity.traveler || 'Grupo', // Por si era una actividad que ya venía por defecto
+    text: activity.name,
+    date: activity.originalDate || new Date().toISOString(),
+    likes: [],
+    dislikes: []
+  });
+  localStorage.setItem('th26_proposals', JSON.stringify(proposalsCache));
+
+  // La quitamos de confirmadas
+  confirmedActivitiesCache.splice(index, 1);
+  localStorage.setItem('th26_confirmed_activities', JSON.stringify(confirmedActivitiesCache));
+
+  renderProposals();
+  renderConfirmedActivities();
+  closeUnconfirmModal();
+}
+
+let currentVoteProposalId = null;
+let currentVoteType = null;
+
+function openVoteModal(id, type) {
+  currentVoteProposalId = id;
+  currentVoteType = type;
+  document.getElementById('vote-traveler').value = "";
+  document.getElementById('vote-modal').classList.add('active');
+}
+
+function closeVoteModal() {
+  document.getElementById('vote-modal').classList.remove('active');
+  currentVoteProposalId = null;
+  currentVoteType = null;
+}
+
+function submitVote() {
+  const traveler = document.getElementById('vote-traveler').value;
+  if (!traveler) {
+    alert('Por favor, selecciona quién eres.');
+    return;
+  }
+  
+  const index = proposalsCache.findIndex(p => p.id === currentVoteProposalId);
+  if (index === -1) {
+    closeVoteModal();
+    return;
+  }
+
+  const p = proposalsCache[index];
+  
+  // Convertimos a array por si alguien tiene la caché guardada con la versión vieja de números
+  if (!Array.isArray(p.likes)) p.likes = [];
+  if (!Array.isArray(p.dislikes)) p.dislikes = [];
+
+  const likeIndex = p.likes.indexOf(traveler);
+  const dislikeIndex = p.dislikes.indexOf(traveler);
+
+  if (currentVoteType === 1) { // Vota LIKE
+    if (dislikeIndex > -1) p.dislikes.splice(dislikeIndex, 1);
+    if (likeIndex > -1) p.likes.splice(likeIndex, 1); else p.likes.push(traveler);
+  } else { // Vota DISLIKE
+    if (likeIndex > -1) p.likes.splice(likeIndex, 1);
+    if (dislikeIndex > -1) p.dislikes.splice(dislikeIndex, 1); else p.dislikes.push(traveler);
+  }
+
+  localStorage.setItem('th26_proposals', JSON.stringify(proposalsCache));
+  renderProposals();
+  closeVoteModal();
+}
+
+let currentProposalIdToDelete = null;
+
+function deleteProposal(id) {
+  currentProposalIdToDelete = id;
+  document.getElementById('delete-proposal-modal').classList.add('active');
+}
+
+function closeDeleteProposalModal() {
+  document.getElementById('delete-proposal-modal').classList.remove('active');
+  currentProposalIdToDelete = null;
+}
+
+function executeDeleteProposal() {
+  if (currentProposalIdToDelete === null) return;
+  const index = proposalsCache.findIndex(p => p.id === currentProposalIdToDelete);
+  if (index === -1) {
+    closeDeleteProposalModal();
+    return;
+  }
+  
+  proposalsCache.splice(index, 1);
+  localStorage.setItem('th26_proposals', JSON.stringify(proposalsCache));
+  renderProposals();
+  closeDeleteProposalModal();
+}
+
+// ─────────────────────────────────────────────────────────────────
+// 13. INTERSECTION OBSERVER
 // ─────────────────────────────────────────────────────────────────
 
 const scrollObserver = new IntersectionObserver((entries) => {
@@ -816,7 +1097,7 @@ function initScrollAnimations() {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// 13. INICIALIZACIÓN
+// 14. INICIALIZACIÓN
 // ─────────────────────────────────────────────────────────────────
 
 async function initApp() {
@@ -830,10 +1111,12 @@ async function initApp() {
   }
 
   renderTravelers();
+  renderProposals();
+  renderConfirmedActivities();
 }
 
 // ─────────────────────────────────────────────────────────────────
-// 14. ARRANQUE
+// 15. ARRANQUE
 // ─────────────────────────────────────────────────────────────────
 
 initAuth();
