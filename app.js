@@ -734,7 +734,30 @@ async function confirmToggleAccom() {
 let currentViewTraveler    = '';
 let currentViewTransportId = '';
 
-function handleViewClick(traveler, transportId) {
+// NUEVA FUNCIÓN: Pide un enlace temporal de 60 segundos justo antes de ver la foto
+async function getFreshUrl(fullUrl) {
+  if (!fullUrl) return '';
+  // Si es un enlace normal (ej. una web de reservas), lo devuelve tal cual
+  if (!fullUrl.includes('/object/public/tickets/') && !fullUrl.includes('/object/sign/tickets/')) {
+    return fullUrl;
+  }
+
+  // Extraer solo el nombre del archivo limpio
+  const marker = '/tickets/';
+  const idx = fullUrl.indexOf(marker);
+  const filePath = decodeURIComponent(fullUrl.slice(idx + marker.length).split('?')[0]);
+
+  try {
+    // Pedimos el enlace temporal a nuestra Edge Function (que verificará el Token/PIN)
+    const { publicUrl } = await api('public_url', { path: filePath });
+    return publicUrl;
+  } catch (err) {
+    console.error("Error obteniendo enlace seguro:", err);
+    return fullUrl;
+  }
+}
+
+async function handleViewClick(traveler, transportId) {
   const ticket  = ticketsCache[traveler]?.[transportId];
   if (!ticket) return;
 
@@ -744,7 +767,7 @@ function handleViewClick(traveler, transportId) {
     currentViewTraveler    = traveler;
     currentViewTransportId = transportId;
 
-    document.getElementById('btn-choice-url').style.display = ticket.url       ? 'inline-flex' : 'none';
+    document.getElementById('btn-choice-url').style.display = ticket.url        ? 'inline-flex' : 'none';
     document.getElementById('btn-choice-img').style.display = ticket.image_url ? 'inline-flex' : 'none';
     document.getElementById('btn-choice-pdf').style.display = ticket.pdf_url   ? 'inline-flex' : 'none';
 
@@ -752,9 +775,11 @@ function handleViewClick(traveler, transportId) {
   } else if (ticket.url) {
     window.open(ticket.url, '_blank', 'noopener');
   } else if (ticket.image_url) {
-    openImageModal(ticket.image_url);
+    const urlSegura = await getFreshUrl(ticket.image_url);
+    openImageModal(urlSegura);
   } else if (ticket.pdf_url) {
-    window.open(ticket.pdf_url, '_blank', 'noopener');
+    const urlSegura = await getFreshUrl(ticket.pdf_url);
+    window.open(urlSegura, '_blank', 'noopener');
   }
 }
 
@@ -768,16 +793,22 @@ function openChoiceUrl() {
   if (ticket?.url) window.open(ticket.url, '_blank', 'noopener');
 }
 
-function openChoiceImage() {
+async function openChoiceImage() {
   closeViewChoiceModal();
   const ticket = ticketsCache[currentViewTraveler]?.[currentViewTransportId];
-  if (ticket?.image_url) openImageModal(ticket.image_url);
+  if (ticket?.image_url) {
+      const urlSegura = await getFreshUrl(ticket.image_url);
+      openImageModal(urlSegura);
+  }
 }
 
-function openChoicePdf() {
+async function openChoicePdf() {
   closeViewChoiceModal();
   const ticket = ticketsCache[currentViewTraveler]?.[currentViewTransportId];
-  if (ticket?.pdf_url) window.open(ticket.pdf_url, '_blank', 'noopener');
+  if (ticket?.pdf_url) {
+      const urlSegura = await getFreshUrl(ticket.pdf_url);
+      window.open(urlSegura, '_blank', 'noopener');
+  }
 }
 
 function openImageModal(url) {
