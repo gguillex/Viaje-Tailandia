@@ -352,7 +352,9 @@ let ticketsCache = {};
 let accomsCache  = {};
 
 async function loadAllData() {
-  const { tickets, accoms } = await api('load');
+  const data = await api('load');
+  const tickets = data.tickets || [];
+  const accoms  = data.accoms || [];
 
   ticketsCache = {};
   for (const row of tickets) {
@@ -500,6 +502,7 @@ function renderTravelers() {
       html += `
         <div class="traveler-transport">
           <div class="t-info">
+            <div class="t-status ${isPaid ? 'done' : ''}"></div>
             <div>🛏️ ${escHtml(a.name)}</div>
           </div>
           <div class="t-actions">
