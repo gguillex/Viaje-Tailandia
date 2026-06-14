@@ -1103,6 +1103,35 @@ function executeDeleteProposal() {
 }
 
 // ─────────────────────────────────────────────────────────────────
+// 12.5. UI — ESTADO DE PAGO DE ALOJAMIENTOS GLOBAL
+// ─────────────────────────────────────────────────────────────────
+
+let groupAccomsPaid = JSON.parse(localStorage.getItem('th26_group_accoms_paid')) || {};
+
+function toggleGroupAccomPaid(accomId, btnElement) {
+  groupAccomsPaid[accomId] = !groupAccomsPaid[accomId];
+  localStorage.setItem('th26_group_accoms_paid', JSON.stringify(groupAccomsPaid));
+  updateGroupAccomBtn(accomId, btnElement);
+}
+
+function updateGroupAccomBtn(accomId, btnElement) {
+  if (groupAccomsPaid[accomId]) {
+    btnElement.classList.add('is-paid');
+    btnElement.innerHTML = '✅ Pagado';
+  } else {
+    btnElement.classList.remove('is-paid');
+    btnElement.innerHTML = '💳 Marcar pago';
+  }
+}
+
+function initGroupAccoms() {
+  document.querySelectorAll('.btn-group-accom').forEach(btn => {
+    const id = btn.getAttribute('data-accom-id');
+    updateGroupAccomBtn(id, btn);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
 // 13. INTERSECTION OBSERVER
 // ─────────────────────────────────────────────────────────────────
 
@@ -1144,6 +1173,7 @@ async function initApp() {
   renderTravelers();
   renderProposals();
   renderConfirmedActivities();
+  initGroupAccoms();
 }
 
 // ─────────────────────────────────────────────────────────────────
